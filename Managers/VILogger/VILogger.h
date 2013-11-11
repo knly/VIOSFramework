@@ -9,6 +9,7 @@
 @import UIKit;
 
 enum VILogLevel {
+    VILogLevelUnspecified,
     VILogLevelVerbose,
     VILogLevelDebug,
     VILogLevelInfo,
@@ -21,8 +22,12 @@ enum VILogLevel {
 
 @property (nonatomic) uint logLevel;
 
+@property (weak, nonatomic) VILogger *parentLogger;
+
 + (VILogger *)defaultLogger;
 
 - (void)log:(NSString *)string forLevel:(uint)logLevel;
+- (void)log:(NSString *)string object:(NSObject *)object forLevel:(uint)logLevel;
+
 
 @end

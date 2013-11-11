@@ -24,11 +24,13 @@
 - (id)init {
     if ((self = [super init])) {
 
-        self.logLevel = VILogLevelDebug;
+        self.logLevel = VILogLevelUnspecified;
 
     }
     return self;
 }
+
+#pragma mark - Logging
 
 - (void)log:(NSString *)string forLevel:(uint)logLevel {
     if (logLevel<self.logLevel) return;
@@ -53,6 +55,23 @@
             break;
     }
     NSLog(@"%@: %@", levelString, string);
+}
+
+- (void)log:(NSString *)string object:(NSObject *)object forLevel:(uint)logLevel {
+    [self log:[NSString stringWithFormat:@"%@ %@", string, [object description]] forLevel:logLevel];
+}
+
+#pragma mark - Log Level
+
+- (uint)logLevel {
+    if (_logLevel==VILogLevelUnspecified&&self!=[VILogger defaultLogger]) {
+        if (self.parentLogger) {
+            return self.parentLogger.logLevel;
+        } else {
+            return [VILogger defaultLogger].logLevel;
+        }
+    }
+    return _logLevel;
 }
 
 @end

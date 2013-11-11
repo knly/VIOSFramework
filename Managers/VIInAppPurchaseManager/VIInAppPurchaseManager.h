@@ -11,6 +11,8 @@
 
 @interface VIInAppPurchaseManager : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver>
 
+@property (strong, nonatomic, readonly) VILogger *logger;
+
 + (VIInAppPurchaseManager *)defaultManager;
 
 - (VIInAppPurchaseProduct *)productForIdentifier:(NSString *)productIdentifier;

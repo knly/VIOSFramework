@@ -16,7 +16,7 @@
 }
 
 - (UIImage *)imageRepresentationInRect:(CGRect)rect {
-    UIGraphicsBeginImageContextWithOptions(rect.size, YES, 0);
+    UIGraphicsBeginImageContextWithOptions(rect.size, YES, 0.);
     [self drawViewHierarchyInRect:rect afterScreenUpdates:YES];
     UIImage *snapshot = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

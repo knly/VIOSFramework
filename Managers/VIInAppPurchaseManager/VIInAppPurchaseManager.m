@@ -7,6 +7,7 @@
 //
 
 #import "VIInAppPurchaseManager.h"
+#import "VILogger.h"
 
 #import <objc/runtime.h>
 
@@ -34,6 +35,8 @@ NSString * const kSKRequestProductIdentifiersProperty = @"kSKRequestProductIdent
 @interface VIInAppPurchaseManager ()
 
 @property (strong, nonatomic) NSMutableDictionary *products;
+
+@property (strong, nonatomic) VILogger *logger;
 
 - (void)processSuccessfulPurchaseForProduct:(VIInAppPurchaseProduct *)product;
 
@@ -79,14 +82,14 @@ NSString * const kSKRequestProductIdentifiersProperty = @"kSKRequestProductIdent
 - (void)verifyProduct:(VIInAppPurchaseProduct *)product {
     if (!product) return;
 
-	//NSLog(@"verify product %@ ...", product.productIdentifier);
+    [self.logger log:@"verify product" object:product.productIdentifier forLevel:VILogLevelInfo];
 
     if (product.state!=VIInAppPurchaseProductStateUnverified) {
-        //NSLog(@"product with identifier %@ is not unverified", product.productIdentifier);
+        [self.logger log:@"product not unverified" object:product.productIdentifier forLevel:VILogLevelInfo];
         return;
     }
 
-	//NSLog(@"startProductRequestWithIdentifier %@", product.productIdentifier);
+    [self.logger log:@"start product request" object:product.productIdentifier forLevel:VILogLevelInfo];
 
 	product.state = VIInAppPurchaseProductStateVerifying;
 
@@ -105,7 +108,7 @@ NSString * const kSKRequestProductIdentifiersProperty = @"kSKRequestProductIdent
         product.product = skproduct;
         product.state = VIInAppPurchaseProductStateVerified;
 
-        //NSLog(@"verification successful %@", product.productIdentifier);
+        [self.logger log:@"verification successful" object:product.productIdentifier forLevel:VILogLevelInfo];
 
 	}
 
@@ -113,18 +116,18 @@ NSString * const kSKRequestProductIdentifiersProperty = @"kSKRequestProductIdent
 	for (NSString *productIdentifier in response.invalidProductIdentifiers) {
         VIInAppPurchaseProduct *product = [self productForIdentifier:productIdentifier];
         product.state = VIInAppPurchaseProductStateUnverified;
-        //NSLog(@"verification failed %@", product.productIdentifier);
+        [self.logger log:@"verification failed" object:product.productIdentifier forLevel:VILogLevelInfo];
 	}
 }
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
-	//NSLog(@"requestDidFailWithError: %@", [error description]);
+    [self.logger log:@"request failed" object:error forLevel:VILogLevelInfo];
 
 	for (NSString *productIdentifier in request.productIdentifiers) {
         VIInAppPurchaseProduct *product = [self productForIdentifier:productIdentifier];
         product.error = error;
         product.state = VIInAppPurchaseProductStateUnverified;
-        //NSLog(@"verification failed %@", product.productIdentifier);
+        [self.logger log:@"verification failed" object:product.productIdentifier forLevel:VILogLevelInfo];
 	}
 }
 
@@ -160,23 +163,23 @@ NSString * const kSKRequestProductIdentifiersProperty = @"kSKRequestProductIdent
                 
             case SKPaymentTransactionStatePurchasing:
                 product.state = VIInAppPurchaseProductStatePurchasing;
-                //NSLog(@"updatedTransaction: %@ state: purchasing", product.productIdentifier);
+                [self.logger log:@"updated transaction state: purchasing" object:product.productIdentifier forLevel:VILogLevelInfo];
                 break;
                 
             case SKPaymentTransactionStatePurchased:
                 [self processSuccessfulPurchaseForProduct:product];
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-                //NSLog(@"updatedTransaction: %@ state: purchased", product.productIdentifier);
+                [self.logger log:@"updated transaction state: purchased" object:product.productIdentifier forLevel:VILogLevelInfo];
                 break;
                 
             case SKPaymentTransactionStateFailed:
                 product.state = VIInAppPurchaseProductStateVerified;
-                //NSLog(@"updatedTransaction: %@ state: failed", product.productIdentifier);
+                [self.logger log:@"updated transaction state: failed" object:product.productIdentifier forLevel:VILogLevelInfo];
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                 break;
                 
             case SKPaymentTransactionStateRestored:
-                //NSLog(@"updatedTransaction: %@ state: restored", product.productIdentifier);
+                [self.logger log:@"updated transaction state: restored" object:product.productIdentifier forLevel:VILogLevelInfo];
                 [self processSuccessfulPurchaseForProduct:product];
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                 break;
@@ -187,12 +190,12 @@ NSString * const kSKRequestProductIdentifiersProperty = @"kSKRequestProductIdent
     }
 }
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error {
-    //NSLog(@"restoreCompletedTransactionsFailedWithError: %@", [error description]);
+    [self.logger log:@"restore previous purchases failed" object:error forLevel:VILogLevelInfo];
 }
 - (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue {
-    //NSLog(@"restoreCompletedTransactionsFinished");
+    [self.logger log:@"restore previous purchases finished" forLevel:VILogLevelInfo];
 }
-		  
+
 #pragma mark - Content Delivery
 		  
 - (void)processSuccessfulPurchaseForProduct:(VIInAppPurchaseProduct *)product {
@@ -204,6 +207,15 @@ NSString * const kSKRequestProductIdentifiersProperty = @"kSKRequestProductIdent
 - (BOOL)hasPurchasedProductWithIdentifier:(NSString *)productIdentifier {
     if (!productIdentifier) return NO;
 	return [[[NSUserDefaults standardUserDefaults] objectForKey:productIdentifier] boolValue];
+}
+
+#pragma mark - Logger
+
+- (VILogger *)logger {
+    if (!_logger) {
+        self.logger = [[VILogger alloc] init];
+    }
+    return _logger;
 }
 
 
