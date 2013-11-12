@@ -162,19 +162,19 @@ NSString * const kSKRequestProductIdentifiersProperty = @"kSKRequestProductIdent
         switch (transaction.transactionState) {
                 
             case SKPaymentTransactionStatePurchasing:
-                product.state = VIInAppPurchaseProductStatePurchasing;
                 [self.logger log:@"updated transaction state: purchasing" object:product.productIdentifier forLevel:VILogLevelInfo];
+                product.state = VIInAppPurchaseProductStatePurchasing;
                 break;
                 
             case SKPaymentTransactionStatePurchased:
+                [self.logger log:@"updated transaction state: purchased" object:product.productIdentifier forLevel:VILogLevelInfo];
                 [self processSuccessfulPurchaseForProduct:product];
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-                [self.logger log:@"updated transaction state: purchased" object:product.productIdentifier forLevel:VILogLevelInfo];
                 break;
                 
             case SKPaymentTransactionStateFailed:
-                product.state = VIInAppPurchaseProductStateVerified;
                 [self.logger log:@"updated transaction state: failed" object:product.productIdentifier forLevel:VILogLevelInfo];
+                product.state = VIInAppPurchaseProductStateVerified;
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                 break;
                 
@@ -200,6 +200,7 @@ NSString * const kSKRequestProductIdentifiersProperty = @"kSKRequestProductIdent
 		  
 - (void)processSuccessfulPurchaseForProduct:(VIInAppPurchaseProduct *)product {
     if (!product) return;
+    [self.logger log:@"process successful purchase" object:product.productIdentifier forLevel:VILogLevelInfo];
 	[[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:product.productIdentifier];
     product.state = VIInAppPurchaseProductStatePurchased;
 }
