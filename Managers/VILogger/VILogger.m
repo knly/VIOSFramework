@@ -58,7 +58,7 @@
 }
 
 - (void)log:(NSString *)string object:(NSObject *)object forLevel:(uint)logLevel {
-    [self log:[NSString stringWithFormat:@"%@ %@", string, [object description]] forLevel:logLevel];
+    [self log:[NSString stringWithFormat:@"%@ OBJECT: %@", string, [object description]] forLevel:logLevel];
 }
 
 #pragma mark - Log Level
