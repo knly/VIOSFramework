@@ -1,18 +1,18 @@
 //
-//  CardPackView.m
+//  VIPlayingCardPackView.m
 //  21
 //
 //  Created by Nils Fischer on 21.06.13.
 //
 //
 
-#import "CardPackView.h"
+#import "VIPlayingCardPackView.h"
 
 #define kCardSpacing 30
 #define kCardWidth 250
 #define kCardHeight 390
 
-@interface CardPackView ()
+@interface VIPlayingCardPackView ()
 
 @property (strong, nonatomic) VIList *staticCardImageViews;
 @property (strong, nonatomic) VIList *scrollingCardImageViews;
@@ -27,7 +27,7 @@
 
 @end
 
-@implementation CardPackView
+@implementation VIPlayingCardPackView
 
 - (void)awakeFromNib {
 	[super awakeFromNib];
