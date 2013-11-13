@@ -18,7 +18,7 @@
 
 - (id)init {
     if ((self=[super init])) {
-        self.state = VIInAppPurchaseProductStateUnverified;
+        _state = VIInAppPurchaseProductStateUnverified;
     }
     return self;
 }

@@ -70,10 +70,10 @@ NSString * const kSKRequestProductIdentifiersProperty = @"kSKRequestProductIdent
     if (!productIdentifier) return nil;
     if (![self.products objectForKey:productIdentifier]) {
         VIInAppPurchaseProduct *product = [VIInAppPurchaseProduct productWithIdentifier:productIdentifier];
-        if ([self hasPurchasedProductWithIdentifier:product.productIdentifier]) product.state = VIInAppPurchaseProductStatePurchased;
-        else product.state = VIInAppPurchaseProductStateUnverified;
         if (!self.products) self.products = [[NSMutableDictionary alloc] init];
         [self.products setObject:product forKey:productIdentifier];
+        if ([self hasPurchasedProductWithIdentifier:product.productIdentifier]) product.state = VIInAppPurchaseProductStatePurchased;
+        else product.state = VIInAppPurchaseProductStateUnverified;
 
     }
     return [self.products objectForKey:productIdentifier];
