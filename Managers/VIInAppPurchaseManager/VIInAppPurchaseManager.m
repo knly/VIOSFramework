@@ -108,18 +108,18 @@ NSString * const kSKRequestProductIdentifiersProperty = @"kSKRequestProductIdent
 	for (NSString *productIdentifier in response.invalidProductIdentifiers) {
         VIInAppPurchaseProduct *product = [self productForIdentifier:productIdentifier];
         product.state = VIInAppPurchaseProductStateUnverified;
-        [self.logger log:@"verification failed" object:product.productIdentifier forLevel:VILogLevelInfo];
+        [self.logger log:@"verification failed" object:product.productIdentifier forLevel:VILogLevelWarning];
 	}
 }
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
-    [self.logger log:@"request failed" object:error forLevel:VILogLevelInfo];
+    [self.logger log:@"request failed" object:error forLevel:VILogLevelWarning];
 
 	for (NSString *productIdentifier in request.productIdentifiers) {
         VIInAppPurchaseProduct *product = [self productForIdentifier:productIdentifier];
         product.error = error;
         product.state = VIInAppPurchaseProductStateUnverified;
-        [self.logger log:@"verification failed" object:product.productIdentifier forLevel:VILogLevelInfo];
+        [self.logger log:@"verification failed" object:product.productIdentifier forLevel:VILogLevelWarning];
 	}
 }
 
@@ -165,7 +165,7 @@ NSString * const kSKRequestProductIdentifiersProperty = @"kSKRequestProductIdent
                 break;
                 
             case SKPaymentTransactionStateFailed:
-                [self.logger log:@"updated transaction state: failed" object:product.productIdentifier forLevel:VILogLevelInfo];
+                [self.logger log:@"updated transaction state: failed" object:product.productIdentifier forLevel:VILogLevelWarning];
                 product.state = VIInAppPurchaseProductStateVerified;
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                 break;
@@ -182,7 +182,7 @@ NSString * const kSKRequestProductIdentifiersProperty = @"kSKRequestProductIdent
     }
 }
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error {
-    [self.logger log:@"restore previous purchases failed" object:error forLevel:VILogLevelInfo];
+    [self.logger log:@"restore previous purchases failed" object:error forLevel:VILogLevelWarning];
 }
 - (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue {
     [self.logger log:@"restore previous purchases finished" forLevel:VILogLevelInfo];

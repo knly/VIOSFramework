@@ -9,6 +9,29 @@
 #import <Foundation/Foundation.h>
 #import "VIListElement.h"
 
+enum suits {
+	kSuitDiamonds,
+	kSuitHearts,
+	kSuitSpades,
+	kSuitClubs
+};
+
+enum ranks {
+	kRank2,
+	kRank3,
+	kRank4,
+	kRank5,
+	kRank6,
+	kRank7,
+	kRank8,
+	kRank9,
+	kRank10,
+	kRankJack,
+	kRankQueen,
+	kRankKing,
+	kRankAce
+};
+
 @interface VIPlayingCard : VIListElement
 
 @property (nonatomic, readonly) uint suit;
@@ -18,6 +41,8 @@
 - (id)initWithDictionaryRepresentation:(NSDictionary *)theDictionary;
 - (NSDictionary *)dictionaryRepresentation;
 
-- (float)countForStrategy:(uint)aStrategy toCard:(VIPlayingCard *)endCard startingWith:(float)theCount;
++ (NSArray *)allRanks;
++ (NSString *)symbolForRank:(uint)rank;
++ (NSArray *)allSuits;
 
 @end
