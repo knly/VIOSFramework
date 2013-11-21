@@ -6,7 +6,7 @@
 //
 //
 
-@import UIKit;
+@import Foundation;
 
 enum VILogLevel {
     VILogLevelUnspecified,

@@ -7,7 +7,6 @@
 //
 
 #import "VIInAppPurchaseManager.h"
-#import "VILogger.h"
 
 #import <objc/runtime.h>
 
@@ -36,24 +35,11 @@ NSString * const kSKRequestProductIdentifiersProperty = @"kSKRequestProductIdent
 
 @property (strong, nonatomic) NSMutableDictionary *products;
 
-@property (strong, nonatomic) VILogger *logger;
-
 - (void)processSuccessfulPurchaseForProduct:(VIInAppPurchaseProduct *)product;
 
 @end
 
 @implementation VIInAppPurchaseManager
-
-+ (VIInAppPurchaseManager *)defaultManager {
-
-    static VIInAppPurchaseManager *defaultManager = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        defaultManager = [[self alloc] init];
-    });
-    return defaultManager;
-
-}
 
 - (id)init {
     if (self = [super init]) {
@@ -209,15 +195,5 @@ NSString * const kSKRequestProductIdentifiersProperty = @"kSKRequestProductIdent
     if (!productIdentifier) return NO;
 	return [[[NSUserDefaults standardUserDefaults] objectForKey:productIdentifier] boolValue];
 }
-
-#pragma mark - Logger
-
-- (VILogger *)logger {
-    if (!_logger) {
-        self.logger = [[VILogger alloc] init];
-    }
-    return _logger;
-}
-
 
 @end

@@ -6,14 +6,12 @@
 //
 //
 
+@import Foundation;
 @import StoreKit;
+#import "VIManager.h"
 #import "VIInAppPurchaseProduct.h"
 
-@interface VIInAppPurchaseManager : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver>
-
-@property (strong, nonatomic, readonly) VILogger *logger;
-
-+ (VIInAppPurchaseManager *)defaultManager;
+@interface VIInAppPurchaseManager : VIManager <SKProductsRequestDelegate, SKPaymentTransactionObserver>
 
 - (VIInAppPurchaseProduct *)productForIdentifier:(NSString *)productIdentifier;
 - (void)verifyProduct:(VIInAppPurchaseProduct *)product;
