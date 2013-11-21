@@ -52,14 +52,9 @@ NSString * const kSKRequestProductIdentifiersProperty = @"kSKRequestProductIdent
     return self;
 }
 
-- (void)userDefaultsDidChange:(NSNotification *)notification {
-    NSDictionary *userDefaults = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
-    [userDefaults enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        VIInAppPurchaseProduct *product = [self.products objectForKey:key];
-        if (product) {
-            product.state = ([self hasPurchasedProductWithIdentifier:product.productIdentifier]) ? VIInAppPurchaseProductStatePurchased : VIInAppPurchaseProductStateUnverified;
-        }
-    }];
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
 }
 
 #pragma mark - Requesting Products
@@ -205,6 +200,18 @@ NSString * const kSKRequestProductIdentifiersProperty = @"kSKRequestProductIdent
 - (BOOL)hasPurchasedProductWithIdentifier:(NSString *)productIdentifier {
     if (!productIdentifier) return NO;
 	return [[[NSUserDefaults standardUserDefaults] objectForKey:productIdentifier] boolValue];
+}
+
+#pragma mark - Update Product State from User Defaults Change
+
+- (void)userDefaultsDidChange:(NSNotification *)notification {
+    NSDictionary *userDefaults = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
+    [userDefaults enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        VIInAppPurchaseProduct *product = [self.products objectForKey:key];
+        if (product) {
+            product.state = ([self hasPurchasedProductWithIdentifier:product.productIdentifier]) ? VIInAppPurchaseProductStatePurchased : VIInAppPurchaseProductStateUnverified;
+        }
+    }];
 }
 
 @end
