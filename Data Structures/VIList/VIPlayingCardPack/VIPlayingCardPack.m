@@ -213,7 +213,7 @@
 
     if (!isBalanced&&![[NSUserDefaults standardUserDefaults] boolForKey:@"VIPlayingCardPackDisableIRCSubtraction"]) {
         // subtract IRC with unbalanced strategies
-        theCount = theCount - (self.packCount-1)*[[strategyInfo objectForKey:@"netUnbalance"] floatValue];
+        theCount = theCount - (self.packCount - [[strategyInfo objectForKey:@"irc_pack_offset"] intValue]) * [[strategyInfo objectForKey:@"netUnbalance"] floatValue];
     }
 
     if (isTrueCount) {
@@ -406,7 +406,8 @@
 		@"bc": @".98",
 		@"pe": @".55",
 		@"ic": @".78",
-		@"key": @"k_o"
+		@"key": @"k_o",
+        @"irc_pack_offset": @(1)
 		};
 			break;
         case kStrategyMentor:
