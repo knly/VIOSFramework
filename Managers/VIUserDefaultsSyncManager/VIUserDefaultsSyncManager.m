@@ -42,11 +42,13 @@
 - (void)localStoreDidChange:(NSNotification *)notification {
 
     // update cloud store
-    NSDictionary *localStore = [[NSUserDefaults standardUserDefaults] dictionaryWithValuesForKeys:self.userDefaultsKeys];
-    [localStore enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        if (obj&&obj!=[NSNull null]) [[NSUbiquitousKeyValueStore defaultStore] setObject:obj forKey:key];
+    NSDictionary *store = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] dictionaryWithValuesForKeys:self.userDefaultsKeys];
+    [store enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        if (obj&&obj!=[NSNull null]) {
+            [[NSUbiquitousKeyValueStore defaultStore] setObject:obj forKey:key];
+        }
     }];
-    [self.logger log:@"Pushed local User Defaults to Cloud" object:localStore forLevel:VILogLevelInfo];
+    [self.logger log:@"Pushed local User Defaults to Cloud" object:store forLevel:VILogLevelInfo];
 
 }
 
@@ -56,11 +58,13 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUserDefaultsDidChangeNotification object:nil];
 
     // update local store
-    NSArray *changedKeys = [[notification.userInfo objectForKey:NSUbiquitousKeyValueStoreChangedKeysKey] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self IN %@", self.userDefaultsKeys]];
-    [changedKeys enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [[NSUserDefaults standardUserDefaults] setObject:[[NSUbiquitousKeyValueStore defaultStore] objectForKey:obj] forKey:obj];
+    NSDictionary *store = [[[NSUbiquitousKeyValueStore defaultStore] dictionaryRepresentation] dictionaryWithValuesForKeys:self.userDefaultsKeys];
+    [store enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        if (obj&&obj!=[NSNull null]) {
+            [[NSUserDefaults standardUserDefaults] setObject:obj forKey:key];
+        }
     }];
-    [self.logger log:@"Updated local User Defaults from Cloud" object:[[NSUbiquitousKeyValueStore defaultStore] dictionaryWithValuesForKeys:changedKeys] forLevel:VILogLevelInfo];
+    [self.logger log:@"Updated local User Defaults from Cloud" object:store forLevel:VILogLevelInfo];
 
     //[[NSUserDefaults standardUserDefaults] synchronize];
 
