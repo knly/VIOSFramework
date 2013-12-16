@@ -60,6 +60,10 @@
 - (void)log:(NSString *)string object:(NSObject *)object forLevel:(uint)logLevel {
     [self log:[NSString stringWithFormat:@"%@ OBJECT: %@", string, [object description]] forLevel:logLevel];
 }
+    
+- (void)log:(NSString *)string error:(NSError *)error {
+    [self log:[NSString stringWithFormat:@"%@ ERROR: %@, %@", string, [error description], [error userInfo]] forLevel:VILogLevelError];
+}
 
 #pragma mark - Log Level
 

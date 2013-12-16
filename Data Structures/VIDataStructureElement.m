@@ -10,6 +10,8 @@
 
 @implementation VIDataStructureElement
 
+@synthesize object = _object, secondaryObject = _secondaryObject;
+
 + (id)elementWithObject:(id)object {
     VIDataStructureElement *element = [[[self class] alloc] init];
     element.object = object;

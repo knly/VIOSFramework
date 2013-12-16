@@ -6,9 +6,13 @@
 //  Copyright (c) 2013 MSK2Media. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
-@interface VIDataStructureElement : NSObject
+@protocol VIDataStructureElement <NSObject>
+
+@end
+
+@interface VIDataStructureElement : NSObject <VIDataStructureElement>
 
 @property (strong, nonatomic) id object;
 @property (strong, nonatomic) id secondaryObject;

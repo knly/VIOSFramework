@@ -28,6 +28,7 @@ enum VILogLevel {
 
 - (void)log:(NSString *)string forLevel:(uint)logLevel;
 - (void)log:(NSString *)string object:(NSObject *)object forLevel:(uint)logLevel;
+- (void)log:(NSString *)string error:(NSError *)error;
 
 
 @end

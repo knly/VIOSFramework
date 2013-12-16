@@ -9,33 +9,49 @@
 #import <Foundation/Foundation.h>
 #import "VIListElement.h"
 
-@interface VIList : NSObject;
+@protocol VIListDelegate;
+
+@interface VIList : NSObject
 
 @property (nonatomic, getter=isClosed) BOOL closed;
 
-@property (weak, nonatomic, readonly) VIListElement *firstElement;
-@property (weak, nonatomic, readonly) VIListElement *lastElement;
-@property (weak, nonatomic) VIListElement *currentElement;
+@property (weak, nonatomic) id <VIListElement> firstElement;
+@property (weak, nonatomic, readonly) id <VIListElement> lastElement;
+@property (weak, nonatomic) id <VIListElement> currentElement;
 
-- (void)addObject:(id)object;
-- (void)appendElement:(VIListElement *)element;
-- (void)insertElement:(VIListElement *)element afterElement:(VIListElement *)preElement;
+@property (weak, nonatomic) id <VIListDelegate> delegate;
+
+- (void)addObject:(id)object; // convenience method
+
+- (void)appendElement:(id <VIListElement>)element;
+- (void)insertElement:(id <VIListElement>)element afterElement:(id <VIListElement>)preElement;
 - (void)removeObject:(id)object;
-- (void)removeElement:(VIListElement *)element;
+- (void)removeElement:(id <VIListElement>)element;
 - (void)removeAllElements;
-- (VIListElement *)elementAtOffset:(int)offset;
-- (VIListElement *)elementAtIndex:(int)index;
-- (VIListElement *)elementForObject:(id)object;
-- (BOOL)containsElement:(VIListElement *)element;
-- (int)count;
+
+- (id <VIListElement>)elementAtOffset:(int)offset;
+- (id <VIListElement>)elementAtIndex:(int)index;
+- (NSUInteger)indexOfElement:(id <VIListElement>)element;
+- (id <VIListElement>)elementForObject:(id)object;
+- (BOOL)containsElement:(id <VIListElement>)element;
+- (NSUInteger)count;
+
 - (void)moveToFirst;
 - (void)moveToLast;
 
-- (VIListElement *)stepNext;
-- (VIListElement *)stepPrev;
+- (id <VIListElement>)stepNext;
+- (id <VIListElement>)stepPrev;
 
 - (void)shuffleElements;
 
 - (NSArray *)orderedElementsAscending:(BOOL)ascending;
+
+@end
+
+@protocol VIListDelegate
+
+- (void)list:(VIList *)list didAddElement:(id <VIListElement>)element;
+- (void)list:(VIList *)list didRemoveElement:(id <VIListElement>)element;
+- (void)listDidRemoveAllElements:(VIList *)list;
 
 @end

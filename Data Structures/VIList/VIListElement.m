@@ -10,13 +10,15 @@
 
 @implementation VIListElement
 
+@synthesize prev = _prev, next = _next;
+
 #pragma mark - List Operators
 
-- (VIListElement *)first {
+- (id <VIListElement>)first {
 	if (_prev) return [_prev first];
 	else return self;
 }
-- (VIListElement *)last {
+- (id <VIListElement>)last {
 	if (_next) return [_next last];
 	else return self;
 }

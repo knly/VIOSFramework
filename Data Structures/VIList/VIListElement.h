@@ -6,15 +6,22 @@
 //  Copyright (c) 2013 viWiD. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+
 #import "VIDataStructureElement.h"
 
-@interface VIListElement : VIDataStructureElement
+@class VIListElement;
 
-@property (weak, nonatomic) VIListElement *prev;
-@property (weak, nonatomic) VIListElement *next;
+@protocol VIListElement <VIDataStructureElement>
 
-- (VIListElement *)first;
-- (VIListElement *)last;
+@property (weak, nonatomic) id <VIListElement> prev;
+@property (weak, nonatomic) id <VIListElement> next;
+
+- (id <VIListElement>)first;
+- (id <VIListElement>)last;
+
+@end
+
+@interface VIListElement : VIDataStructureElement <VIListElement>
 
 @end

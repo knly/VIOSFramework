@@ -10,8 +10,6 @@
 
 @interface VIList ()
 
-@property (weak, nonatomic) VIListElement *firstElement;
-
 @property (strong, nonatomic) NSMutableArray *elements;
 
 @end
@@ -21,7 +19,6 @@
 - (id)init {
     if (self = [super init]) {
 		
-        _elements = [[NSMutableArray alloc] init];
 		_closed = NO;
 		
     }
@@ -50,27 +47,33 @@
 	if (!object) return;
 	[self appendElement:[VIListElement elementWithObject:object]];
 }
-- (void)appendElement:(VIListElement *)element {
+- (void)appendElement:(id <VIListElement>)element {
     [self insertElement:element afterElement:self.lastElement];
 }
-- (void)insertElement:(VIListElement *)element afterElement:(VIListElement *)preElement {
+- (void)insertElement:(id <VIListElement>)element afterElement:(id <VIListElement>)preElement {
     if (!element) return;
-    if (!_elements) _elements = [[NSMutableArray alloc] init];
-    [_elements addObject:element];
-    if (preElement) {
-        element.prev = preElement;
-        element.next = preElement.next;
-    } else {
-        element.prev = _firstElement.prev;
-        element.next = _firstElement;
+    id <VIListElement> prev = preElement;
+    id <VIListElement> next = preElement.next;
+    if (!preElement) {
+        prev = _firstElement.prev;
+        next = _firstElement;
         _firstElement = element;
     }
+    element.prev = prev;
     element.prev.next = element;
+    element.next = next;
     element.next.prev = element;
     if (!_firstElement) {
 		_firstElement = element;
 	}
     self.closed = _closed;
+    [self didAddElement:element];
+}
+
+- (void)didAddElement:(id<VIListElement>)element {
+    if (!_elements) _elements = [[NSMutableArray alloc] init];
+    [_elements addObject:element];
+    [self.delegate list:self didAddElement:element];
 }
 
 #pragma mark Removing Elements
@@ -78,47 +81,73 @@
 - (void)removeObject:(id)object {
     [self removeElement:[self elementForObject:object]];
 }
-- (void)removeElement:(VIListElement *)element {
+- (void)removeElement:(id <VIListElement>)element {
 	if (element==self.firstElement) _firstElement = _firstElement.next;
 	if (element==self.currentElement) _currentElement = nil;
 	element.prev.next = element.next;
 	element.next.prev = element.prev;
-	[_elements removeObject:element];
+    [self didRemoveElement:element];
 }
 - (void)removeAllElements {
-	[_elements removeAllObjects];
 	_firstElement = nil;
     _currentElement = nil;
+    [self didRemoveAllElements];
+}
+
+- (void)didRemoveElement:(id<VIListElement>)element {
+	[_elements removeObject:element];
+    [self.delegate list:self didRemoveElement:element];
+}
+- (void)didRemoveAllElements {
+	[_elements removeAllObjects];
+    [self.delegate listDidRemoveAllElements:self];
 }
 
 #pragma mark Retrieving Elements
 
-- (VIListElement *)lastElement {
-	if (_closed) return _firstElement.prev;
+- (id <VIListElement>)lastElement {
+	if (self.closed) return _firstElement.prev;
 	return [_firstElement last];
 }
 
-- (VIListElement *)elementAtOffset:(int)offset {
-	VIListElement *cu = self.currentElement;
+- (id <VIListElement>)elementAtOffset:(int)offset {
+	id <VIListElement> cu = self.currentElement;
 	for (int i=0; i<offset; i++) {
 		cu = cu.next;
 	}
 	return cu;
 }
-- (VIListElement *)elementAtIndex:(int)index {
+
+- (id <VIListElement>)elementAtIndex:(int)index {
     if (index<0||index>=[self count]) return nil;
-	VIListElement *cu = self.firstElement;
+	id <VIListElement> cu = self.firstElement;
 	for (int i=0; i<index; i++) {
 		cu = cu.next;
 	}
 	return cu;
 }
-- (VIListElement *)elementForObject:(id)object {
+
+- (NSUInteger)indexOfElement:(id <VIListElement>)element {
+    if (!element) return 0; // TODO: throw exception & log error ?
+	id <VIListElement> cu = self.firstElement;
+	id <VIListElement> start = cu;
+    NSUInteger index = 0;
+	while (cu&&!(self.closed&&cu==start)) {
+		if (cu==element) {
+            return index;
+        }
+        cu = cu.next;
+        index++;
+    }
+    return index;
+}
+
+- (id <VIListElement>)elementForObject:(id)object {
     if (!object) return nil;
-	VIListElement *cu = self.firstElement;
-	VIListElement *start = cu;
-	while (cu&&!(_closed&&cu==start)) {
-		if (cu.object==object) {
+	id <VIListElement> cu = self.firstElement;
+	id <VIListElement> start = cu;
+	while (cu&&!(self.closed&&cu==start)) {
+		if (cu==object||([cu isKindOfClass:[VIListElement class]]&&[(VIListElement *)cu object]==object)) {
             return cu;
 		}
 		cu = cu.next;
@@ -126,12 +155,19 @@
     return nil;
 }
 
-- (BOOL)containsElement:(VIListElement *)element {
-    return [_elements containsObject:element];
+- (BOOL)containsElement:(id <VIListElement>)element {
+    return [self elementForObject:element]!=nil;
 }
 
-- (int)count {
-    return [_elements count];
+- (NSUInteger)count {
+    NSUInteger count = 0;
+	id <VIListElement> cu = self.firstElement;
+	id <VIListElement> start = cu;
+	while (cu&&!(self.closed&&cu==start)) {
+		count++;
+		cu = cu.next;
+	}
+    return count;
 }
 
 #pragma mark Navigating
@@ -143,31 +179,33 @@
     _currentElement = self.lastElement;
 }
 
-- (VIListElement *)stepNext {
-	VIListElement *cu = _currentElement;
+- (id <VIListElement>)stepNext {
+	id <VIListElement> cu = _currentElement;
 	_currentElement = _currentElement.next;
 	return cu;
 }
-- (VIListElement *)stepPrev {
+- (id <VIListElement>)stepPrev {
 	_currentElement = _currentElement.prev;
 	return _currentElement;
 }
 
 #pragma mark More
 
-- (void)setCurrentElement:(VIListElement *)currentElement {
+- (void)setCurrentElement:(id <VIListElement>)currentElement {
     if (![self containsElement:currentElement]) return;
     _currentElement = currentElement;
 }
 
 - (void)shuffleElements {
+    // TODO: make sure implementation works with managed object's automatic prev/next linking
+    
     if (!_firstElement) return;
     
-	VIListElement *preFirst = self.firstElement;
-	VIListElement *newLast = nil;
+	id <VIListElement> preFirst = self.firstElement;
+	id <VIListElement> newLast = nil;
 	// pick random elements and move to new list
-	VIListElement *cu;
-	int remaining = [_elements count];
+	id <VIListElement> cu;
+	NSUInteger remaining = [self count];
 	while (preFirst) {
 		// go to random element in old list
 		int rnd = arc4random()%remaining;
@@ -192,10 +230,10 @@
 
 - (NSArray *)orderedElementsAscending:(BOOL)ascending {
     NSMutableArray *orderedElements = [[NSMutableArray alloc] init];
-    VIListElement *cu = (ascending)?self.firstElement:self.lastElement;
-	VIListElement *start = cu;
+    id <VIListElement> cu = (ascending)?self.firstElement:self.lastElement;
+	id <VIListElement> start = cu;
     [orderedElements addObject:cu];
-    while ((cu = (ascending)?cu.next:cu.prev)&&!(_closed&&cu==start)) [orderedElements addObject:cu];
+    while ((cu = (ascending)?cu.next:cu.prev)&&!(self.closed&&cu==start)) [orderedElements addObject:cu];
     return orderedElements;
 }
 
