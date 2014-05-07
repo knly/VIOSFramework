@@ -55,8 +55,8 @@ static NSMutableDictionary *classLoggers;
 
 - (void)log:(NSString *)string forLevel:(uint)logLevel {
     if (logLevel != VILogLevelUnspecified) {
-        if (logLevel == VILogLevelNone) return;
         if (logLevel < self.logLevel) return;
+        if (logLevel == VILogLevelNone) return;
     }
     NSString *levelString = @"";
     switch (logLevel) {
