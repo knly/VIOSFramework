@@ -33,7 +33,10 @@
     if ((self = [super init])) {
         self.fetchedResultsController = fetchedResultsController;
         self.tableView = tableView;
-        tableView.dataSource = self;
+        if (tableView) {
+            tableView.dataSource = self;
+            [self.logger log:@"Redirected Table View Datasource" forLevel:VILogLevelVerbose];
+        }
         self.cellIdentifier = cellIdentifier;
         self.configureCellBlock = configureCellBlock;
     }
@@ -45,8 +48,9 @@
     _fetchedResultsController = fetchedResultsController;
     fetchedResultsController.delegate = self;
     NSError *error = nil;
-    [fetchedResultsController performFetch:&error];
-    [self.logger log:@"Fetch failed" error:error];
+    [self.logger log:@"Perform fetch ..." forLevel:VILogLevelVerbose];
+    if (![fetchedResultsController performFetch:&error]) [self.logger log:@"Perform Fetch" error:error];
+    else [self.logger log:[NSString stringWithFormat:@"Fetched %i Objects", [fetchedResultsController fetchedObjects].count] forLevel:VILogLevelVerbose];
 }
 
 
@@ -73,13 +77,15 @@
 
 - (BOOL)tableView:(UITableView*)tableView canEditRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    return YES;
+    return self.delegate && [self.delegate respondsToSelector:@selector(deleteObject:)];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    id object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.delegate deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        [self.logger log:@"Attempting to delete" object:object forLevel:VILogLevelVerbose];
+        [self.delegate deleteObject:object];
     }
 }
 
@@ -88,11 +94,13 @@
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController*)controller
 {
+    [self.logger log:@"Begin updates" forLevel:VILogLevelVerbose];
     [self.tableView beginUpdates];
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController*)controller
 {
+    [self.logger log:@"End updates" forLevel:VILogLevelVerbose];
     [self.tableView endUpdates];
 }
 
@@ -100,12 +108,15 @@
 {
     switch (type) {
         case NSFetchedResultsChangeInsert:
+            [self.logger log:@"Inserted at index path" object:indexPath forLevel:VILogLevelVerbose];
             [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
         case NSFetchedResultsChangeMove:
+            [self.logger log:@"Moved at index path" object:indexPath forLevel:VILogLevelVerbose];
             [self.tableView moveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
             break;
         case NSFetchedResultsChangeDelete:
+            [self.logger log:@"Deleted at index path" object:indexPath forLevel:VILogLevelVerbose];
             [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
         default:
@@ -116,8 +127,8 @@
 
 - (id)selectedItem
 {
-    NSIndexPath* path = self.tableView.indexPathForSelectedRow;
-    return path ? [self.fetchedResultsController objectAtIndexPath:path] : nil;
+    NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
+    return indexPath ? [self.fetchedResultsController objectAtIndexPath:indexPath] : nil;
 }
 
 

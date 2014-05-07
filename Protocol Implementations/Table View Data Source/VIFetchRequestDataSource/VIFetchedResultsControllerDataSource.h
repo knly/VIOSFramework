@@ -12,6 +12,7 @@ typedef void (^VITableViewCellConfigureBlock)(UITableViewCell *cell, id item);
 
 @protocol VIFetchedResultsControllerDataSourceDelegate
 
+@optional
 - (void)deleteObject:(id)object;
 
 @end
@@ -19,7 +20,7 @@ typedef void (^VITableViewCellConfigureBlock)(UITableViewCell *cell, id item);
 
 @interface VIFetchedResultsControllerDataSource : NSObject <UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
-@property (weak, nonatomic) id <VIFetchedResultsControllerDataSourceDelegate> delegate;
+@property (weak, nonatomic) id <VIFetchedResultsControllerDataSourceDelegate, NSObject> delegate;
 
 @property (nonatomic) BOOL paused;
 
