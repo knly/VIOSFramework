@@ -15,11 +15,11 @@
 #pragma mark - List Operators
 
 - (id <VIListElement>)first {
-	if (_prev) return [_prev first];
+	if (self.prev) return [self.prev first];
 	else return self;
 }
 - (id <VIListElement>)last {
-	if (_next) return [_next last];
+	if (self.next) return [self.next last];
 	else return self;
 }
 

@@ -11,8 +11,20 @@
 
 @implementation VIPlayingCard
 
-#pragma mark -
-#pragma mark Lifecycle
+@synthesize prev = _prev, next = _next;
+
+#pragma mark - VIListElement Implementation
+
+- (id <VIListElement>)first {
+	if (self.prev) return [self.prev first];
+	else return self;
+}
+- (id <VIListElement>)last {
+	if (self.next) return [self.next last];
+	else return self;
+}
+
+#pragma mark - Lifecycle
 
 - (id)initWithSuit:(uint)aSuit rank:(uint)aRank {
 	if ((self = [super init])) {
@@ -32,11 +44,21 @@
     return self;
 }
 
++ (VIPlayingCard *)playingCardWithSuit:(uint)aSuit rank:(uint)aRank {
+    return [[VIPlayingCard alloc] initWithSuit:aSuit rank:aRank];
+}
+
 #pragma mark - Serialization
 
 - (NSDictionary *)dictionaryRepresentation {
     return @{@"suit": @(_suit),
              @"rank": @(_rank)};
+}
+
+#pragma mark - Description
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@ of %@>", [VIPlayingCard symbolForRank:self.rank], [VIPlayingCard symbolForSuit:self.suit]];
 }
 
 #pragma mark - All Ranks & Suits
@@ -57,6 +79,16 @@
             [NSNumber numberWithUnsignedInt:kRankKing],
             [NSNumber numberWithUnsignedInt:kRankAce],
             nil];
+}
++ (NSString *)symbolForSuit:(uint)suit {
+    switch (suit) {
+        case kSuitDiamonds: return @"♦ (diamonds)";
+        case kSuitHearts: return @"♥ (hearts)";
+        case kSuitSpades: return @"♠ (spades)";
+        case kSuitClubs: return @"♣ (clubs)";
+            
+        default: return nil;
+    }
 }
 + (NSString *)symbolForRank:(uint)rank {
     switch (rank) {

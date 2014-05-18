@@ -32,7 +32,7 @@ enum ranks {
 	kRankAce
 };
 
-@interface VIPlayingCard : VIListElement
+@interface VIPlayingCard : NSObject <VIListElement>
 
 @property (nonatomic, readonly) uint suit;
 @property (nonatomic, readonly) uint rank;
@@ -41,7 +41,10 @@ enum ranks {
 - (id)initWithDictionaryRepresentation:(NSDictionary *)theDictionary;
 - (NSDictionary *)dictionaryRepresentation;
 
++ (VIPlayingCard *)playingCardWithSuit:(uint)aSuit rank:(uint)aRank;
+
 + (NSArray *)allRanks;
++ (NSString *)symbolForSuit:(uint)suit;
 + (NSString *)symbolForRank:(uint)rank;
 + (NSArray *)allSuits;
 
