@@ -7,11 +7,9 @@
 //
 
 @import Foundation;
-#import "VILogger.h"
+
 
 @interface VIManager : NSObject
-
-@property (strong, nonatomic, readonly) VILogger *logger;
 
 + (instancetype)defaultManager;
 

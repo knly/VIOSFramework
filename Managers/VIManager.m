@@ -8,11 +8,6 @@
 
 #import "VIManager.h"
 
-@interface VIManager ()
-
-@property (strong, nonatomic) VILogger *logger;
-
-@end
 
 @implementation VIManager
 
@@ -36,15 +31,6 @@ static NSMutableDictionary *defaultManagers;
     }
 
     return defaultManager;
-}
-
-#pragma mark - Logger
-
-- (VILogger *)logger {
-    if (!_logger) {
-        self.logger = [[VILogger alloc] init];
-    }
-    return _logger;
 }
 
 @end
