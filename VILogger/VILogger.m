@@ -53,7 +53,7 @@ static NSMutableDictionary *classLoggers;
 
 #pragma mark - Logging
 
-- (void)log:(NSString *)string forLevel:(uint)logLevel {
+- (void)log:(NSString *)string forLevel:(VILogLevel)logLevel {
     if (logLevel != VILogLevelUnspecified) {
         if (logLevel < self.logLevel) return;
         if (logLevel == VILogLevelNone) return;
@@ -90,7 +90,7 @@ static NSMutableDictionary *classLoggers;
     NSLog(@"%@%@: %@", keyString, levelString, string);
 }
 
-- (void)log:(NSString *)string object:(NSObject *)object forLevel:(uint)logLevel {
+- (void)log:(NSString *)string object:(NSObject *)object forLevel:(VILogLevel)logLevel {
     [self log:[NSString stringWithFormat:@"%@ OBJECT: %@", string, [object description]] forLevel:logLevel];
 }
     
@@ -100,7 +100,7 @@ static NSMutableDictionary *classLoggers;
 
 #pragma mark - Log Level
 
-- (uint)logLevel {
+- (VILogLevel)logLevel {
     if (_logLevel==VILogLevelUnspecified&&self!=[VILogger defaultLogger]) {
         if (self.parentLogger) {
             return self.parentLogger.logLevel;

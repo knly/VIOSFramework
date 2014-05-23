@@ -50,7 +50,7 @@
     NSError *error = nil;
     [self.logger log:@"Perform fetch ..." forLevel:VILogLevelVerbose];
     if (![fetchedResultsController performFetch:&error]) [self.logger log:@"Perform Fetch" error:error];
-    else [self.logger log:[NSString stringWithFormat:@"Fetched %i Objects", [fetchedResultsController fetchedObjects].count] forLevel:VILogLevelVerbose];
+    else [self.logger log:[NSString stringWithFormat:@"Fetched %lu Objects", [fetchedResultsController fetchedObjects].count] forLevel:VILogLevelVerbose];
 }
 
 

@@ -8,7 +8,7 @@
 
 @import Foundation;
 
-enum VILogLevel {
+typedef enum : NSUInteger {
     VILogLevelUnspecified, // Initial level, messages are always logged
     VILogLevelVerbose,
     VILogLevelDebug,
@@ -16,11 +16,12 @@ enum VILogLevel {
     VILogLevelWarning,
     VILogLevelError,
     VILogLevelNone // Messages are never logged
-};
+} VILogLevel;
+
 
 @interface VILogger : NSObject
 
-@property (nonatomic) uint logLevel;
+@property (nonatomic) VILogLevel logLevel;
 
 @property (strong, nonatomic) NSString *key;
 
@@ -29,8 +30,8 @@ enum VILogLevel {
 + (VILogger *)defaultLogger;
 + (VILogger *)loggerForClass:(Class)class;
 
-- (void)log:(NSString *)string forLevel:(uint)logLevel;
-- (void)log:(NSString *)string object:(NSObject *)object forLevel:(uint)logLevel;
+- (void)log:(NSString *)string forLevel:(VILogLevel)logLevel;
+- (void)log:(NSString *)string object:(NSObject *)object forLevel:(VILogLevel)logLevel;
 - (void)log:(NSString *)string error:(NSError *)error;
 
 
