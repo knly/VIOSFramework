@@ -16,6 +16,8 @@
 @property (copy, nonatomic) NSString *cellIdentifier;
 @property (copy, nonatomic) VITableViewCellConfigureBlock configureCellBlock;
 
+- (void)performFetch;
+
 @end
 
 
@@ -35,7 +37,7 @@
         self.tableView = tableView;
         if (tableView) {
             tableView.dataSource = self;
-            [self.logger log:@"Redirected Table View Datasource" forLevel:VILogLevelVerbose];
+            [self.logger log:@"Redirected table view datasource" forLevel:VILogLevelVerbose];
         }
         self.cellIdentifier = cellIdentifier;
         self.configureCellBlock = configureCellBlock;
@@ -43,16 +45,20 @@
     return self;
 }
 
-- (void)setFetchedResultsController:(NSFetchedResultsController*)fetchedResultsController
+- (void)setFetchedResultsController:(NSFetchedResultsController *)fetchedResultsController
 {
     _fetchedResultsController = fetchedResultsController;
     fetchedResultsController.delegate = self;
-    NSError *error = nil;
-    [self.logger log:@"Perform fetch ..." forLevel:VILogLevelVerbose];
-    if (![fetchedResultsController performFetch:&error]) [self.logger log:@"Perform Fetch" error:error];
-    else [self.logger log:[NSString stringWithFormat:@"Fetched %lu Objects", [fetchedResultsController fetchedObjects].count] forLevel:VILogLevelVerbose];
+    [self performFetch];
 }
 
+- (void)performFetch
+{
+    NSError *error = nil;
+    [self.logger log:@"Perform fetch ..." forLevel:VILogLevelVerbose];
+    if (![self.fetchedResultsController performFetch:&error]) [self.logger log:@"Perform Fetch" error:error];
+    else [self.logger log:[NSString stringWithFormat:@"Fetched %lu objects in %lu sections", self.fetchedResultsController.fetchedObjects.count, self.fetchedResultsController.sections.count] forLevel:VILogLevelDebug];
+}
 
 #pragma mark - Table View Datasource
 
@@ -73,6 +79,22 @@
     id object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     self.configureCellBlock(cell, object);
     return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    id <NSFetchedResultsSectionInfo> sectionInfo = self.fetchedResultsController.sections[section];
+    return sectionInfo.name;
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    return self.fetchedResultsController.sectionIndexTitles;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
+{
+    return [self.fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
 }
 
 - (BOOL)tableView:(UITableView*)tableView canEditRowAtIndexPath:(NSIndexPath*)indexPath
@@ -109,7 +131,7 @@
     switch (type) {
         case NSFetchedResultsChangeInsert:
             [self.logger log:@"Inserted at index path" object:indexPath forLevel:VILogLevelVerbose];
-            [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView insertRowsAtIndexPaths:@[ newIndexPath ] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
         case NSFetchedResultsChangeMove:
             [self.logger log:@"Moved at index path" object:indexPath forLevel:VILogLevelVerbose];
@@ -117,8 +139,11 @@
             break;
         case NSFetchedResultsChangeDelete:
             [self.logger log:@"Deleted at index path" object:indexPath forLevel:VILogLevelVerbose];
-            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView deleteRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
+        case NSFetchedResultsChangeUpdate:
+            [self.logger log:@"Updated at index path" object:indexPath forLevel:VILogLevelVerbose];
+            [self.tableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationAutomatic];
         default:
             break;
     }
@@ -144,6 +169,15 @@
         [self.fetchedResultsController performFetch:NULL];
         [self.tableView reloadData];
     }
+}
+
+
+#pragma mark - Reloading
+
+- (void)reloadData
+{
+    [self performFetch];
+    [self.tableView reloadData];
 }
 
 @end

@@ -25,7 +25,9 @@ typedef void (^VITableViewCellConfigureBlock)(UITableViewCell *cell, id item);
 @property (nonatomic) BOOL paused;
 
 - (id)initWithFetchedResultsController:(NSFetchedResultsController *)fetchedResultsController tableView:(UITableView *)tableView cellIdentifier:(NSString *)cellIdentifier configureCellBlock:(VITableViewCellConfigureBlock)configureCellBlock;
+- (NSFetchedResultsController *)fetchedResultsController;
 
 - (id)selectedItem;
+- (void)reloadData;
 
 @end
