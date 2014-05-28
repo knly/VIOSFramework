@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VICircularProgressView : UILabel
+@interface VICircularProgressView : UIView
 
 @property (nonatomic) CGFloat progress;
 
@@ -17,5 +17,11 @@
 
 @property (strong, nonatomic) UIColor *progressTintColor;
 @property (strong, nonatomic) UIColor *trackTintColor;
+
+@property (strong, nonatomic) NSString *text;
+@property (strong, nonatomic) NSDictionary *textAttributes;
+@property (nonatomic) BOOL showText;
+
+@property (strong, nonatomic) UIImage *image;
 
 @end
