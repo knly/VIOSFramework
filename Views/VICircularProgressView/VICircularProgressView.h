@@ -19,7 +19,7 @@
 @property (strong, nonatomic) UIColor *trackTintColor;
 
 @property (strong, nonatomic) NSString *text;
-@property (strong, nonatomic) NSDictionary *textAttributes;
+@property (strong, nonatomic) NSAttributedString *attributedText;
 @property (nonatomic) BOOL showText;
 
 @property (strong, nonatomic) UIImage *image;

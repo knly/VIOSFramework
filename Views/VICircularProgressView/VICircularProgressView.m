@@ -7,11 +7,8 @@
 //
 
 #import "VICircularProgressView.h"
-#import "UIImage+ImageEffects.h"
 
 @interface VICircularProgressView ()
-
-@property (strong, nonatomic) UIImage *blurredImage;
 
 @end
 
@@ -58,12 +55,12 @@
     CGRect innerCircleRect = CGRectMake(center.x - innerRadius, center.y - innerRadius, 2 * innerRadius, 2 * innerRadius);
     
     // Image
-    UIImage *image = self.blurredImage;
+    UIImage *image = self.image;
     if (image) {
         CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextSaveGState(context);
         [[UIBezierPath bezierPathWithOvalInRect:CGRectInset(innerCircleRect, -1, -1)] addClip];
-        [self.blurredImage drawInRect:CGRectInset(innerCircleRect, -1, -1)];
+        [image drawInRect:CGRectInset(innerCircleRect, -1, -1)];
         CGContextRestoreGState(context);
     }
 
@@ -90,18 +87,11 @@
     
     // Text
     if (self.showText) {
-        NSString *text = self.text;
-        if (!text) text = [NSString stringWithFormat:@"%d%%", (int)roundf(self.progress*100)];
-        NSMutableDictionary *textAttributes = [self.textAttributes mutableCopy];
-        if (!textAttributes[NSFontAttributeName]) textAttributes[NSFontAttributeName] = [UIFont systemFontOfSize:17.];
-        if (!textAttributes[NSForegroundColorAttributeName]) textAttributes[NSForegroundColorAttributeName] = (self.image) ? [UIColor whiteColor] : [UIColor blackColor];
-        if (!textAttributes[NSParagraphStyleAttributeName]) {
-            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-            paragraphStyle.alignment = NSTextAlignmentCenter;
-            textAttributes[NSParagraphStyleAttributeName] = paragraphStyle;
-        }
-        CGFloat lineHeight = [(UIFont *)textAttributes[NSFontAttributeName] lineHeight];
-        [text drawInRect:CGRectMake(innerCircleRect.origin.x, innerCircleRect.origin.y + innerCircleRect.size.height / 2. - lineHeight / 2., innerCircleRect.size.width, lineHeight) withAttributes:textAttributes];
+        NSMutableAttributedString *attributedText = [self.attributedText mutableCopy];
+        if (!attributedText && self.text) attributedText = [[NSMutableAttributedString alloc] initWithString:self.text];
+        if (!attributedText) attributedText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d%%", (int)roundf(self.progress*100)]];
+        CGRect textRect = [attributedText boundingRectWithSize:innerCircleRect.size options:0 context:nil];
+        [attributedText drawInRect:CGRectMake(innerCircleRect.origin.x + innerCircleRect.size.width / 2. - textRect.size.width / 2., innerCircleRect.origin.y + innerCircleRect.size.height / 2. - textRect.size.height / 2., textRect.size.width, textRect.size.height)];
     }
 }
 
@@ -147,8 +137,9 @@
     [self setNeedsDisplay];
 }
 
-- (void)setTextAttributes:(NSDictionary *)textAttributes {
-    _textAttributes = textAttributes;
+- (void)setAttributedText:(NSAttributedString *)attributedText {
+    _attributedText = attributedText;
+    self.text = attributedText.string;
     [self setNeedsDisplay];
 }
 
@@ -159,15 +150,7 @@
 
 - (void)setImage:(UIImage *)image {
     _image = image;
-    self.blurredImage = nil;
     [self setNeedsDisplay];
-}
-
-- (UIImage *)blurredImage {
-    if (!_blurredImage) {
-        self.blurredImage = [self.image applyBlurWithRadius:10. tintColor:[UIColor colorWithWhite:0 alpha:0.2] saturationDeltaFactor:1.5 maskImage:nil];
-    }
-    return _blurredImage;
 }
 
 @end
