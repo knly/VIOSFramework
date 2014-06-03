@@ -7,18 +7,20 @@
 //
 
 @import Foundation;
+@import UIKit;
 #import "VIArraySectionInfo.h"
 
-@interface VIArrayDataSource : NSObject
+typedef UITableViewCell *(^VITableViewCellDequeueAndConfigureBlock)(UITableView *tableView, NSIndexPath *indexPath, id object);
+
+
+@interface VIArrayDataSource : NSObject <UITableViewDataSource>
 
 @property (strong, nonatomic) NSArray *array;
 @property (strong, nonatomic) NSArray *sortDescriptors;
 @property (strong, nonatomic) NSString *sectionNameKeyPath;
+@property (strong, nonatomic) VITableViewCellDequeueAndConfigureBlock cellBlock;
 
-- (id)initWithArray:(NSArray *)array sortDescriptors:(NSArray *)sortDescriptors sectionNameKeyPath:(NSString *)keyPath;
-
-- (NSArray *)sortDescriptors;
-- (NSString *)sectionNameKeyPath;
+- (id)initWithArray:(NSArray *)array sortDescriptors:(NSArray *)sortDescriptors sectionNameKeyPath:(NSString *)keyPath cellBlock:(VITableViewCellDequeueAndConfigureBlock)cellBlock;
 
 - (NSArray *)objects;
 - (id)objectAtIndexPath:(NSIndexPath *)indexPath;
