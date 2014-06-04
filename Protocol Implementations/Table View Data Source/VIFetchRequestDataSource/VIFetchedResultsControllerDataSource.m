@@ -57,7 +57,7 @@
     NSError *error = nil;
     [self.logger log:@"Perform fetch ..." forLevel:VILogLevelVerbose];
     if (![self.fetchedResultsController performFetch:&error]) [self.logger log:@"Perform Fetch" error:error];
-    else [self.logger log:[NSString stringWithFormat:@"Fetched %lu objects in %lu sections", self.fetchedResultsController.fetchedObjects.count, self.fetchedResultsController.sections.count] forLevel:VILogLevelDebug];
+    else [self.logger log:[NSString stringWithFormat:@"Fetched %d objects in %d sections", self.fetchedResultsController.fetchedObjects.count, self.fetchedResultsController.sections.count] forLevel:VILogLevelDebug];
 }
 
 #pragma mark - Table View Datasource
@@ -89,6 +89,7 @@
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
+    if (!self.showIndexTitles) return nil;
     return self.fetchedResultsController.sectionIndexTitles;
 }
 

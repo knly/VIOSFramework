@@ -22,6 +22,7 @@ typedef void (^VITableViewCellConfigureBlock)(UITableViewCell *cell, id item);
 
 @property (weak, nonatomic) id <VIFetchedResultsControllerDataSourceDelegate, NSObject> delegate;
 
+@property (nonatomic) BOOL showIndexTitles;
 @property (nonatomic) BOOL paused;
 
 - (id)initWithFetchedResultsController:(NSFetchedResultsController *)fetchedResultsController tableView:(UITableView *)tableView cellIdentifier:(NSString *)cellIdentifier configureCellBlock:(VITableViewCellConfigureBlock)configureCellBlock;
