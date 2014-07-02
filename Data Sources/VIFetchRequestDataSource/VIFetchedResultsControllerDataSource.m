@@ -21,10 +21,6 @@
 
 #pragma mark - Object Lifecycle
 
-- (id)init {
-    return nil;
-}
-
 - (id)initWithFetchedResultsController:(NSFetchedResultsController *)fetchedResultsController tableView:(UITableView *)tableView cellIdentifier:(NSString *)cellIdentifier configureCellBlock:(VITableViewCellConfigureBlock)configureCellBlock
 {
     if ((self = [super init])) {
