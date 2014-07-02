@@ -15,6 +15,11 @@
     return NSStringFromClass([self class]);
 }
 
+- (NSString *)entityName
+{
+    return [[self class] entityName];
+}
+
 + (instancetype)insertNewObjectIntoContext:(NSManagedObjectContext *)context
 {
     return [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:context];

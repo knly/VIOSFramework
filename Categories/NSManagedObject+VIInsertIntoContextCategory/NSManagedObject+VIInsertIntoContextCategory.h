@@ -12,6 +12,7 @@
 @interface NSManagedObject (VIInsertIntoContextCategory)
 
 + (NSString *)entityName;
+- (NSString *)entityName;
 + (instancetype)insertNewObjectIntoContext:(NSManagedObjectContext *)context;
 
 @end

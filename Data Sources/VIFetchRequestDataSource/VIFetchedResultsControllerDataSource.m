@@ -11,11 +11,6 @@
 
 @interface VIFetchedResultsControllerDataSource ()
 
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (strong, nonatomic) UITableView *tableView;
-@property (copy, nonatomic) NSString *cellIdentifier;
-@property (copy, nonatomic) VITableViewCellConfigureBlock configureCellBlock;
-
 - (void)performFetch;
 
 @end
