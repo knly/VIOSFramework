@@ -28,7 +28,7 @@
         self.tableView = tableView;
         if (tableView) {
             tableView.dataSource = self;
-            [self.logger log:@"Redirected table view datasource" forLevel:VILogLevelVerbose];
+            [self.logger log:@"Redirected table view datasource" forLevel:VILogLevelInfo];
         }
         self.cellIdentifier = cellIdentifier;
         self.configureCellBlock = configureCellBlock;
@@ -46,9 +46,8 @@
 - (void)performFetch
 {
     NSError *error = nil;
-    [self.logger log:@"Perform fetch ..." forLevel:VILogLevelVerbose];
     if (![self.fetchedResultsController performFetch:&error]) [self.logger log:@"Perform Fetch" error:error];
-    else [self.logger log:[NSString stringWithFormat:@"Fetched %d objects in %d sections", self.fetchedResultsController.fetchedObjects.count, self.fetchedResultsController.sections.count] forLevel:VILogLevelDebug];
+    else [self.logger log:[NSString stringWithFormat:@"Fetched %d objects in %d sections", (int)self.fetchedResultsController.fetchedObjects.count, (int)self.fetchedResultsController.sections.count] forLevel:VILogLevelDebug];
 }
 
 #pragma mark - Table View Datasource
@@ -118,24 +117,41 @@
     [self.tableView endUpdates];
 }
 
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+{
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.logger log:@"Inserted section at index" object:@(sectionIndex) forLevel:VILogLevelVerbose];
+            break;
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.logger log:@"Deleted section at index" object:@(sectionIndex) forLevel:VILogLevelVerbose];
+            break;
+        default:
+            break;
+    }
+}
+
 - (void)controller:(NSFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath*)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath*)newIndexPath
 {
     switch (type) {
         case NSFetchedResultsChangeInsert:
-            [self.logger log:@"Inserted at index path" object:indexPath forLevel:VILogLevelVerbose];
             [self.tableView insertRowsAtIndexPaths:@[ newIndexPath ] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.logger log:@"Inserted row at index path" object:newIndexPath forLevel:VILogLevelVerbose];
             break;
         case NSFetchedResultsChangeMove:
-            [self.logger log:@"Moved at index path" object:indexPath forLevel:VILogLevelVerbose];
             [self.tableView moveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
             break;
+            [self.logger log:@"Moved row at index path" object:indexPath forLevel:VILogLevelVerbose];
         case NSFetchedResultsChangeDelete:
-            [self.logger log:@"Deleted at index path" object:indexPath forLevel:VILogLevelVerbose];
             [self.tableView deleteRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.logger log:@"Deleted row at index path" object:indexPath forLevel:VILogLevelVerbose];
             break;
         case NSFetchedResultsChangeUpdate:
-            [self.logger log:@"Updated at index path" object:indexPath forLevel:VILogLevelVerbose];
             [self.tableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.logger log:@"Updated row at index path" object:indexPath forLevel:VILogLevelVerbose];
+            break;
         default:
             break;
     }
