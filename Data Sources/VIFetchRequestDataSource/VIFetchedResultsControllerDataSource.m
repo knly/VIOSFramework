@@ -47,7 +47,7 @@
 {
     NSError *error = nil;
     if (![self.fetchedResultsController performFetch:&error]) [self.logger log:@"Perform Fetch" error:error];
-    else [self.logger log:[NSString stringWithFormat:@"Fetched %d objects in %d sections", (int)self.fetchedResultsController.fetchedObjects.count, (int)self.fetchedResultsController.sections.count] forLevel:VILogLevelDebug];
+    else [self.logger log:[NSString stringWithFormat:@"Fetched %d objects in %d sections", (int)self.fetchedResultsController.fetchedObjects.count, (int)self.fetchedResultsController.sections.count] forLevel:VILogLevelVerbose];
 }
 
 #pragma mark - Table View Datasource
