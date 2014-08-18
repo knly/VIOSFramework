@@ -1,0 +1,412 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		871C87BB19A1AE13003F75F0 /* VIPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875B4C8C19A06E1D00D7E811 /* VIPerson.swift */; };
+		871C87BD19A1B6D3003F75F0 /* VIAddressBookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871C87BC19A1B6D3003F75F0 /* VIAddressBookTests.swift */; };
+		871C87BF19A1BB9A003F75F0 /* VIPersonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871C87BE19A1BB9A003F75F0 /* VIPersonTests.swift */; };
+		875B4C8D19A06E1D00D7E811 /* VIPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875B4C8C19A06E1D00D7E811 /* VIPerson.swift */; };
+		87E376EB19A1CBD200F2B158 /* VIAddressBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E376EA19A1CBD200F2B158 /* VIAddressBook.swift */; };
+		87F86EF81991E82A00B8A166 /* VIOSFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 87F86EF71991E82A00B8A166 /* VIOSFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		87F86F151991E90300B8A166 /* VICircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F86F141991E90300B8A166 /* VICircularProgressView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		871C87BC19A1B6D3003F75F0 /* VIAddressBookTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIAddressBookTests.swift; sourceTree = "<group>"; };
+		871C87BE19A1BB9A003F75F0 /* VIPersonTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPersonTests.swift; sourceTree = "<group>"; };
+		875B4C8C19A06E1D00D7E811 /* VIPerson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPerson.swift; sourceTree = "<group>"; };
+		87E376EA19A1CBD200F2B158 /* VIAddressBook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIAddressBook.swift; sourceTree = "<group>"; };
+		87F86EF21991E82A00B8A166 /* VIOSFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VIOSFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		87F86EF61991E82A00B8A166 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		87F86EF71991E82A00B8A166 /* VIOSFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIOSFramework.h; sourceTree = "<group>"; };
+		87F86EFD1991E82A00B8A166 /* VIOSFrameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VIOSFrameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		87F86F001991E82A00B8A166 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		87F86F141991E90300B8A166 /* VICircularProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VICircularProgressView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		87F86EEE1991E82A00B8A166 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87F86EFA1991E82A00B8A166 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		87F86EE81991E82A00B8A166 = {
+			isa = PBXGroup;
+			children = (
+				87F86EF41991E82A00B8A166 /* VIOSFramework */,
+				87F86EFE1991E82A00B8A166 /* VIOSFrameworkTests */,
+				87F86EF31991E82A00B8A166 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		87F86EF31991E82A00B8A166 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				87F86EF21991E82A00B8A166 /* VIOSFramework.framework */,
+				87F86EFD1991E82A00B8A166 /* VIOSFrameworkTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		87F86EF41991E82A00B8A166 /* VIOSFramework */ = {
+			isa = PBXGroup;
+			children = (
+				87F86EF71991E82A00B8A166 /* VIOSFramework.h */,
+				875B4C8C19A06E1D00D7E811 /* VIPerson.swift */,
+				87E376EA19A1CBD200F2B158 /* VIAddressBook.swift */,
+				87F86F141991E90300B8A166 /* VICircularProgressView.swift */,
+				87F86EF51991E82A00B8A166 /* Supporting Files */,
+			);
+			path = VIOSFramework;
+			sourceTree = "<group>";
+		};
+		87F86EF51991E82A00B8A166 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				87F86EF61991E82A00B8A166 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		87F86EFE1991E82A00B8A166 /* VIOSFrameworkTests */ = {
+			isa = PBXGroup;
+			children = (
+				871C87BE19A1BB9A003F75F0 /* VIPersonTests.swift */,
+				871C87BC19A1B6D3003F75F0 /* VIAddressBookTests.swift */,
+				87F86EFF1991E82A00B8A166 /* Supporting Files */,
+			);
+			path = VIOSFrameworkTests;
+			sourceTree = "<group>";
+		};
+		87F86EFF1991E82A00B8A166 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				87F86F001991E82A00B8A166 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		87F86EEF1991E82A00B8A166 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87F86EF81991E82A00B8A166 /* VIOSFramework.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		87F86EF11991E82A00B8A166 /* VIOSFramework */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 87F86F051991E82A00B8A166 /* Build configuration list for PBXNativeTarget "VIOSFramework" */;
+			buildPhases = (
+				87F86EED1991E82A00B8A166 /* Sources */,
+				87F86EEE1991E82A00B8A166 /* Frameworks */,
+				87F86EEF1991E82A00B8A166 /* Headers */,
+				87F86EF01991E82A00B8A166 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VIOSFramework;
+			productName = VIOSFramework;
+			productReference = 87F86EF21991E82A00B8A166 /* VIOSFramework.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		87F86EFC1991E82A00B8A166 /* VIOSFrameworkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 87F86F081991E82A00B8A166 /* Build configuration list for PBXNativeTarget "VIOSFrameworkTests" */;
+			buildPhases = (
+				87F86EF91991E82A00B8A166 /* Sources */,
+				87F86EFA1991E82A00B8A166 /* Frameworks */,
+				87F86EFB1991E82A00B8A166 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VIOSFrameworkTests;
+			productName = VIOSFrameworkTests;
+			productReference = 87F86EFD1991E82A00B8A166 /* VIOSFrameworkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		87F86EE91991E82A00B8A166 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0600;
+				ORGANIZATIONNAME = "viWiD Webdesign & iOS Development";
+				TargetAttributes = {
+					87F86EF11991E82A00B8A166 = {
+						CreatedOnToolsVersion = 6.0;
+					};
+					87F86EFC1991E82A00B8A166 = {
+						CreatedOnToolsVersion = 6.0;
+					};
+				};
+			};
+			buildConfigurationList = 87F86EEC1991E82A00B8A166 /* Build configuration list for PBXProject "VIOSFramework" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 87F86EE81991E82A00B8A166;
+			productRefGroup = 87F86EF31991E82A00B8A166 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				87F86EF11991E82A00B8A166 /* VIOSFramework */,
+				87F86EFC1991E82A00B8A166 /* VIOSFrameworkTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		87F86EF01991E82A00B8A166 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87F86EFB1991E82A00B8A166 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		87F86EED1991E82A00B8A166 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87F86F151991E90300B8A166 /* VICircularProgressView.swift in Sources */,
+				875B4C8D19A06E1D00D7E811 /* VIPerson.swift in Sources */,
+				87E376EB19A1CBD200F2B158 /* VIAddressBook.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87F86EF91991E82A00B8A166 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				871C87BD19A1B6D3003F75F0 /* VIAddressBookTests.swift in Sources */,
+				871C87BB19A1AE13003F75F0 /* VIPerson.swift in Sources */,
+				871C87BF19A1BB9A003F75F0 /* VIPersonTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		87F86F031991E82A00B8A166 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		87F86F041991E82A00B8A166 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		87F86F061991E82A00B8A166 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = VIOSFramework/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		87F86F071991E82A00B8A166 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = VIOSFramework/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		87F86F091991E82A00B8A166 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = VIOSFrameworkTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		87F86F0A1991E82A00B8A166 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = VIOSFrameworkTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		87F86EEC1991E82A00B8A166 /* Build configuration list for PBXProject "VIOSFramework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87F86F031991E82A00B8A166 /* Debug */,
+				87F86F041991E82A00B8A166 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		87F86F051991E82A00B8A166 /* Build configuration list for PBXNativeTarget "VIOSFramework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87F86F061991E82A00B8A166 /* Debug */,
+				87F86F071991E82A00B8A166 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		87F86F081991E82A00B8A166 /* Build configuration list for PBXNativeTarget "VIOSFrameworkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87F86F091991E82A00B8A166 /* Debug */,
+				87F86F0A1991E82A00B8A166 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 87F86EE91991E82A00B8A166 /* Project object */;
+}
