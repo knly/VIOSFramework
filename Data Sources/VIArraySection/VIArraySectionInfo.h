@@ -10,9 +10,9 @@
 
 @protocol VIArraySectionInfo
 
-- (NSInteger)numberOfObjects;
-- (NSArray *)objects;
-- (NSString *)name;
-- (NSString *)indexTitle;
+@property (readonly) NSInteger numberOfObjects;
+@property (readonly) NSArray *objects;
+@property (readonly) NSString *name;
+@property (readonly) NSString *indexTitle;
 
 @end

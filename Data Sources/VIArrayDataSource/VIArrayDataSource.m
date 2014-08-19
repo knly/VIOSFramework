@@ -8,7 +8,7 @@
 
 #import "VIArrayDataSource.h"
 #import "VIArraySection.h"
-
+#import "VILogger.h"
 
 @interface VIArrayDataSource ()
 

@@ -20,13 +20,14 @@ typedef UITableViewCell *(^VITableViewCellDequeueAndConfigureBlock)(UITableView 
 @property (strong, nonatomic) NSString *sectionNameKeyPath;
 @property (strong, nonatomic) VITableViewCellDequeueAndConfigureBlock cellBlock;
 
+@property (readonly) NSArray *sections;
+@property (readonly) NSArray *sectionIndexTitles;
+@property (readonly) NSArray *objects;
+
 - (id)initWithArray:(NSArray *)array sortDescriptors:(NSArray *)sortDescriptors sectionNameKeyPath:(NSString *)keyPath cellBlock:(VITableViewCellDequeueAndConfigureBlock)cellBlock;
 
-- (NSArray *)objects;
 - (id)objectAtIndexPath:(NSIndexPath *)indexPath;
 
-- (NSArray *)sections;
-- (NSArray *)sectionIndexTitles;
 - (NSInteger)sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index;
 
 @end
