@@ -24,10 +24,13 @@ typedef enum : NSUInteger {
 
 @interface VIAddressBook : NSObject
 
+@property (strong, nonatomic) NSMutableArray *contacts;
+
 + (VIAddressBookAuthorizationStatus)authorizationStatus;
 - (void)requestAuthorizationWithCompletion:(void (^)(bool granted, NSError* error))completion;
 
-- (NSArray *)contacts;
+// TODO: really expose this? ABPersonViewController doesn't trigger it..
+- (void)addressBookDidChangeExternally;
 
 - (VIAddressBookContact *)newContact;
 

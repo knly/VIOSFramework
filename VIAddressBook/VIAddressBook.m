@@ -7,7 +7,7 @@
 //
 
 #import "VIAddressBook.h"
-
+#import "VILogger.h"
 
 const NSString *VIAddressBookDispatchQueueIdentifier = @"VIAddressBookDispatchQueueIdentifier";
 
@@ -19,7 +19,6 @@ const NSString *VIAddressBookDispatchQueueIdentifier = @"VIAddressBookDispatchQu
 
 }
 
-@property (strong, nonatomic) NSMutableArray *contacts;
 
 - (dispatch_queue_t)addressBookQueue;
 
@@ -68,7 +67,6 @@ void vi_dispatch_sync_for_addressbook(VIAddressBook *addressBook, dispatch_block
         
         // Register external change callback
         ABAddressBookRegisterExternalChangeCallback(addressBook, addressBookExternalChangeCallback, (__bridge void *)(self));
-        
         _addressBookRef = addressBook;
     }
     return self;
@@ -128,6 +126,7 @@ void vi_dispatch_sync_for_addressbook(VIAddressBook *addressBook, dispatch_block
                 if ([mergedRecords containsObject:(__bridge id)(record)]) continue;
                 
                 VIAddressBookContact *contact = [self newContact];
+                contact.addressBook = self;
                 [contact mergeInfoFromRecord:record];
                 
                 // merge linked records
@@ -168,6 +167,7 @@ void addressBookExternalChangeCallback(ABAddressBookRef reference, CFDictionaryR
     vi_dispatch_sync_for_addressbook(self, ^{
         ABAddressBookRevert(_addressBookRef);
     });
+    // TODO: update instead of reset!
     self.contacts = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:VIAddressBookDidChangeExternallyNotification object:self];
 }
