@@ -44,5 +44,20 @@ class VIPersonTests: XCTestCase {
         XCTAssertNotNil(person.fullName, "Person's full name is nil, although last name was provided")
         XCTAssert(person.fullName! == lastName, "Person's full name is \(person.fullName) and not \(lastName) (with only last name provided)")
     }
+    
+    
+    // MARK: Comparisons
+    
+    func testLeadingLastNameOrdering() {
+        let person1 = VIPerson(firstName: "Alice", lastName: nil)
+        let person2 = VIPerson(firstName: "Xavier", lastName: "Bob")
+        let person3 = VIPerson(firstName: nil, lastName: "Chen")
+        let person4 = VIPerson(firstName: "David", lastName: "Drey")
+        let nilPerson = VIPerson()
+        XCTAssertTrue(VIPerson.leadingLastNameIsOrderedBefore(person1, obj2: person2), "Incorrect ordering: \(person1) should be before \(person2)")
+        XCTAssertTrue(VIPerson.leadingLastNameIsOrderedBefore(person2, obj2: person3), "Incorrect ordering: \(person2) should be before \(person3)")
+        XCTAssertTrue(VIPerson.leadingLastNameIsOrderedBefore(person3, obj2: person4), "Incorrect ordering: \(person3) should be before \(person4)")
+        XCTAssertTrue(VIPerson.leadingLastNameIsOrderedBefore(person1, obj2: nilPerson), "Incorrect ordering: \(person1) should be before \(nilPerson)")
+    }
 
 }

@@ -23,8 +23,9 @@ public class VIAddressBook<C: VIAddressBookContact> {
         return addressBookRef
     }()
 
-    
     public var contacts: [C]? {
+        // TODO: request authorization
+        // TODO: use lazy property
         if VIAddressBook.authorizationStatus() != .Authorized {
             return nil
         }
@@ -34,7 +35,7 @@ public class VIAddressBook<C: VIAddressBookContact> {
         return _contacts
     }
     private var _contacts: [C]?
-    
+
     
     // MARK: Initializers
 
@@ -64,6 +65,7 @@ public class VIAddressBook<C: VIAddressBookContact> {
     
     private func loadContacts() -> [C]
     {
+        println("loading contacts...")
         var records: NSArray = ABAddressBookCopyArrayOfAllPeople(addressBookRef).takeRetainedValue()
         var contacts = [C]()
         var mergedRecords = [ABRecordRef]()
@@ -85,6 +87,7 @@ public class VIAddressBook<C: VIAddressBookContact> {
             // TODO: use +=
             contacts.append(contact)
         }
+        println("done")
         return contacts
     }
     
@@ -93,6 +96,13 @@ public class VIAddressBook<C: VIAddressBookContact> {
 
 public class VIAddressBookContact: VIPerson {
     
+    // TODO: store all merged recordId's ?
+    public var recordId: ABRecordID?
+    
+    public var birthday: NSDate?
+    public var pictureThumbnail: UIImage?
+    public var picture: UIImage?
+
     private var mergedAddressBookRecordRefs = [ABRecordRef]()
     
     public var addressBookRecordRef: ABRecordRef? {
@@ -107,6 +117,9 @@ public class VIAddressBookContact: VIPerson {
     private func mergeInfoFromRecord(record: ABRecordRef)
     {
         // TODO: lazy load data from recordRef
+        if recordId == nil {
+            recordId = ABRecordGetRecordID(record)
+        }
         if firstName == nil {
             firstName = ABRecordCopyValue(record, kABPersonFirstNameProperty).takeRetainedValue() as? String
         }
@@ -120,8 +133,7 @@ public class VIAddressBookContact: VIPerson {
             }
         }
         if picture == nil {
-            // TODO: copying correctly?
-            thumbPicture = UIImage(data: ABPersonCopyImageDataWithFormat(record, kABPersonImageFormatThumbnail).takeRetainedValue())
+            pictureThumbnail = UIImage(data: ABPersonCopyImageDataWithFormat(record, kABPersonImageFormatThumbnail).takeRetainedValue())
             picture = UIImage(data: ABPersonCopyImageDataWithFormat(record, kABPersonImageFormatOriginalSize).takeRetainedValue())
         }
         // TODO: use +=

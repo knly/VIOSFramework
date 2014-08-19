@@ -117,7 +117,6 @@ public class VICircularProgressView: UIView {
             CGContextRestoreGState(context)
         }
         
-        
         // Track
         let trackPath: UIBezierPath = {
             if self.progress == 0 {

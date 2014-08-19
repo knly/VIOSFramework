@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 // TODO: remove NSObject inheritance, only necessary for KVO
-
 public class VIPerson: NSObject {
 
     
@@ -18,9 +17,6 @@ public class VIPerson: NSObject {
     
     public var firstName: String?
     public var lastName: String?
-    public var birthday: NSDate?
-    public var thumbPicture: UIImage?
-    public var picture: UIImage?
     
     
     // MARK: Computed Properties
@@ -35,7 +31,8 @@ public class VIPerson: NSObject {
         }
     }
     
-    public var lastNameInitial: String? {
+    // TODO: char instead of string?
+    public var leadingLastNameInitial: String? {
         if lastName != nil && countElements(lastName!) > 0 {
             // TODO: use String instead of NSString
             return (lastName! as NSString).substringToIndex(1).capitalizedString
@@ -44,7 +41,9 @@ public class VIPerson: NSObject {
             }
             return nil
     }
-
+    public class func leadingLastNameInitial(person: VIPerson) -> String? {
+        return person.leadingLastNameInitial
+    }
     
     // MARK: Initializers
     
@@ -58,27 +57,8 @@ public class VIPerson: NSObject {
         self.firstName = firstName
         self.lastName = lastName
     }
+    
 
-    
-    // MARK: Comparisons
-    
-    public func leadingLastNameCompare(otherContact: VIPerson) -> NSComparisonResult
-    {
-        let obj1 = self
-        let obj2 = otherContact
-        if obj1.fullName == nil && obj2.fullName != nil {
-            return .OrderedDescending
-        } else if obj1.fullName != nil && obj2.fullName == nil {
-            return .OrderedAscending
-        } else if obj1.fullName == nil && obj2.fullName == nil {
-            return .OrderedSame
-        }
-        let str1 = obj1.lastName ?? obj1.firstName!
-        let str2 = obj2.lastName ?? obj2.firstName!
-        return str2.caseInsensitiveCompare(str2)
-    }
-    
-    
     // MARK: Interface Output
     // TODO: move somewhere else?
     
@@ -88,7 +68,7 @@ public class VIPerson: NSObject {
             var attributedName = NSMutableAttributedString(string: fullName)
             attributedName.beginEditing()
             if lastName != nil {
-                var beginBoldFont = countElements(firstName!)
+                var beginBoldFont = firstName != nil ? countElements(firstName!) : 0
                 if beginBoldFont > 0 {
                     beginBoldFont++
                 }
@@ -103,4 +83,36 @@ public class VIPerson: NSObject {
         }
     }
     
+}
+
+
+// MARK: - Printable
+
+extension VIPerson: Printable {
+    
+    public override var description: String {
+        let unnamedString = "Unnamed Person"
+        return "\(fullName ?? unnamedString)"
+    }
+}
+
+
+// MARK: - Comparison
+
+extension VIPerson {
+    
+    public class func leadingLastNameIsOrderedBefore(obj1: VIPerson, _ obj2: VIPerson) -> Bool
+    {
+        if obj1.fullName == nil && obj2.fullName != nil {
+            return false
+        } else if obj1.fullName != nil && obj2.fullName == nil {
+            return true
+        } else if obj1.fullName == nil && obj2.fullName == nil {
+            return true
+        }
+        let str1 = obj1.lastName ?? obj1.firstName!
+        let str2 = obj2.lastName ?? obj2.firstName!
+        return str1 < str2
+    }
+
 }
