@@ -28,7 +28,7 @@
         self.tableView = tableView;
         if (tableView) {
             tableView.dataSource = self;
-            [self.logger log:@"Redirected table view datasource" forLevel:VILogLevelInfo];
+            [self.logger log:@"Redirected table view datasource" forLevel:VILogLevelDebug];
         }
         self.cellIdentifier = cellIdentifier;
         self.configureCellBlock = configureCellBlock;
