@@ -17,7 +17,6 @@
 		87E376F419A284CA00F2B158 /* VIPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875B4C8C19A06E1D00D7E811 /* VIPerson.swift */; };
 		87E376F519A284CA00F2B158 /* VIAddressBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E376EA19A1CBD200F2B158 /* VIAddressBook.swift */; };
 		87E376F619A284CA00F2B158 /* VICircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F86F141991E90300B8A166 /* VICircularProgressView.swift */; };
-		87F86EF81991E82A00B8A166 /* VIOSFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 87F86EF71991E82A00B8A166 /* VIOSFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		87F86F151991E90300B8A166 /* VICircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F86F141991E90300B8A166 /* VICircularProgressView.swift */; };
 /* End PBXBuildFile section */
 
@@ -30,7 +29,6 @@
 		87E376EE19A1CD9100F2B158 /* VIArrayDataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIArrayDataSourceTests.swift; sourceTree = "<group>"; };
 		87F86EF21991E82A00B8A166 /* VIOSFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VIOSFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87F86EF61991E82A00B8A166 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		87F86EF71991E82A00B8A166 /* VIOSFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIOSFramework.h; sourceTree = "<group>"; };
 		87F86EFD1991E82A00B8A166 /* VIOSFrameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VIOSFrameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		87F86F001991E82A00B8A166 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87F86F141991E90300B8A166 /* VICircularProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VICircularProgressView.swift; sourceTree = "<group>"; };
@@ -75,7 +73,6 @@
 		87F86EF41991E82A00B8A166 /* VIOSFramework */ = {
 			isa = PBXGroup;
 			children = (
-				87F86EF71991E82A00B8A166 /* VIOSFramework.h */,
 				875B4C8C19A06E1D00D7E811 /* VIPerson.swift */,
 				87E376EA19A1CBD200F2B158 /* VIAddressBook.swift */,
 				87F86F141991E90300B8A166 /* VICircularProgressView.swift */,
@@ -119,7 +116,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87F86EF81991E82A00B8A166 /* VIOSFramework.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

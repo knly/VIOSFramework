@@ -128,7 +128,7 @@ public class VIAddressBookContact: VIPerson {
         }
         if birthday == nil {
             let birthday = ABRecordCopyValue(record, kABPersonBirthdayProperty).takeRetainedValue() as? NSDate
-            if birthday != nil && NSCalendar(calendarIdentifier: NSGregorianCalendar).component(.YearCalendarUnit, fromDate: birthday) != 1604 {
+            if birthday != nil && NSCalendar(calendarIdentifier: NSGregorianCalendar).component(.YearCalendarUnit, fromDate: birthday!) != 1604 {
                 self.birthday = birthday
             }
         }
