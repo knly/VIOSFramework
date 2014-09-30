@@ -7,17 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		871C87BD19A1B6D3003F75F0 /* VIAddressBookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871C87BC19A1B6D3003F75F0 /* VIAddressBookTests.swift */; };
 		871C87BF19A1BB9A003F75F0 /* VIPersonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871C87BE19A1BB9A003F75F0 /* VIPersonTests.swift */; };
+		8751993819A3E4DC005B7404 /* VIArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E376EC19A1CCDB00F2B158 /* VIArrayDataSource.swift */; };
+		8751993919A3E4DD005B7404 /* VIArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E376EC19A1CCDB00F2B158 /* VIArrayDataSource.swift */; };
+		8751993B19A3E621005B7404 /* VIArrayDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E376EE19A1CD9100F2B158 /* VIArrayDataSourceTests.swift */; };
+		8751993C19A3E685005B7404 /* VIAddressBookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871C87BC19A1B6D3003F75F0 /* VIAddressBookTests.swift */; };
+		8751993D19A3E68D005B7404 /* VIAddressBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E376EA19A1CBD200F2B158 /* VIAddressBook.swift */; };
+		8751993E19A3E68D005B7404 /* VIAddressBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E376EA19A1CBD200F2B158 /* VIAddressBook.swift */; };
 		875B4C8D19A06E1D00D7E811 /* VIPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875B4C8C19A06E1D00D7E811 /* VIPerson.swift */; };
-		87E376EB19A1CBD200F2B158 /* VIAddressBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E376EA19A1CBD200F2B158 /* VIAddressBook.swift */; };
-		87E376ED19A1CCDB00F2B158 /* VIArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E376EC19A1CCDB00F2B158 /* VIArrayDataSource.swift */; };
-		87E376EF19A1CD9100F2B158 /* VIArrayDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E376EE19A1CD9100F2B158 /* VIArrayDataSourceTests.swift */; };
-		87E376F219A1D03F00F2B158 /* VIArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E376EC19A1CCDB00F2B158 /* VIArrayDataSource.swift */; };
 		87E376F419A284CA00F2B158 /* VIPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875B4C8C19A06E1D00D7E811 /* VIPerson.swift */; };
-		87E376F519A284CA00F2B158 /* VIAddressBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E376EA19A1CBD200F2B158 /* VIAddressBook.swift */; };
 		87E376F619A284CA00F2B158 /* VICircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F86F141991E90300B8A166 /* VICircularProgressView.swift */; };
 		87F86F151991E90300B8A166 /* VICircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F86F141991E90300B8A166 /* VICircularProgressView.swift */; };
+		87F92B2A19A42C9F004E4129 /* VILoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F92B2919A42C9F004E4129 /* VILoggerTests.swift */; };
+		87FF151F19A3F97A00E7D7FB /* VILogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FF151E19A3F97A00E7D7FB /* VILogger.swift */; };
+		87FF152019A3F97A00E7D7FB /* VILogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FF151E19A3F97A00E7D7FB /* VILogger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,8 @@
 		87F86EFD1991E82A00B8A166 /* VIOSFrameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VIOSFrameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		87F86F001991E82A00B8A166 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87F86F141991E90300B8A166 /* VICircularProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VICircularProgressView.swift; sourceTree = "<group>"; };
+		87F92B2919A42C9F004E4129 /* VILoggerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VILoggerTests.swift; sourceTree = "<group>"; };
+		87FF151E19A3F97A00E7D7FB /* VILogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VILogger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,10 +78,11 @@
 		87F86EF41991E82A00B8A166 /* VIOSFramework */ = {
 			isa = PBXGroup;
 			children = (
+				87FF151E19A3F97A00E7D7FB /* VILogger.swift */,
 				875B4C8C19A06E1D00D7E811 /* VIPerson.swift */,
 				87E376EA19A1CBD200F2B158 /* VIAddressBook.swift */,
-				87F86F141991E90300B8A166 /* VICircularProgressView.swift */,
 				87E376EC19A1CCDB00F2B158 /* VIArrayDataSource.swift */,
+				87F86F141991E90300B8A166 /* VICircularProgressView.swift */,
 				87F86EF51991E82A00B8A166 /* Supporting Files */,
 			);
 			path = VIOSFramework;
@@ -96,6 +102,7 @@
 				871C87BE19A1BB9A003F75F0 /* VIPersonTests.swift */,
 				871C87BC19A1B6D3003F75F0 /* VIAddressBookTests.swift */,
 				87E376EE19A1CD9100F2B158 /* VIArrayDataSourceTests.swift */,
+				87F92B2919A42C9F004E4129 /* VILoggerTests.swift */,
 				87F86EFF1991E82A00B8A166 /* Supporting Files */,
 			);
 			path = VIOSFrameworkTests;
@@ -216,8 +223,9 @@
 			files = (
 				87F86F151991E90300B8A166 /* VICircularProgressView.swift in Sources */,
 				875B4C8D19A06E1D00D7E811 /* VIPerson.swift in Sources */,
-				87E376EB19A1CBD200F2B158 /* VIAddressBook.swift in Sources */,
-				87E376ED19A1CCDB00F2B158 /* VIArrayDataSource.swift in Sources */,
+				8751993D19A3E68D005B7404 /* VIAddressBook.swift in Sources */,
+				8751993819A3E4DC005B7404 /* VIArrayDataSource.swift in Sources */,
+				87FF151F19A3F97A00E7D7FB /* VILogger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,13 +233,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87F92B2A19A42C9F004E4129 /* VILoggerTests.swift in Sources */,
+				87FF152019A3F97A00E7D7FB /* VILogger.swift in Sources */,
+				8751993C19A3E685005B7404 /* VIAddressBookTests.swift in Sources */,
 				87E376F419A284CA00F2B158 /* VIPerson.swift in Sources */,
+				8751993B19A3E621005B7404 /* VIArrayDataSourceTests.swift in Sources */,
 				87E376F619A284CA00F2B158 /* VICircularProgressView.swift in Sources */,
-				871C87BD19A1B6D3003F75F0 /* VIAddressBookTests.swift in Sources */,
-				87E376F519A284CA00F2B158 /* VIAddressBook.swift in Sources */,
 				871C87BF19A1BB9A003F75F0 /* VIPersonTests.swift in Sources */,
-				87E376EF19A1CD9100F2B158 /* VIArrayDataSourceTests.swift in Sources */,
-				87E376F219A1D03F00F2B158 /* VIArrayDataSource.swift in Sources */,
+				8751993919A3E4DD005B7404 /* VIArrayDataSource.swift in Sources */,
+				8751993E19A3E68D005B7404 /* VIAddressBook.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

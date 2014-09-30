@@ -9,10 +9,9 @@
 import Foundation
 import UIKit
 
-// TODO: remove NSObject inheritance, only necessary for KVO
-public class VIPerson: NSObject {
+public class VIPerson {
 
-    
+
     // MARK: Public Properties
     
     public var firstName: String?
@@ -48,7 +47,7 @@ public class VIPerson: NSObject {
     // MARK: Initializers
     
     // TODO: required only to make address book work..
-    public required override init() {
+    public required init() {
         
     }
     
@@ -90,7 +89,7 @@ public class VIPerson: NSObject {
 
 extension VIPerson: Printable {
     
-    public override var description: String {
+    public var description: String {
         let unnamedString = "Unnamed Person"
         return "\(fullName ?? unnamedString)"
     }

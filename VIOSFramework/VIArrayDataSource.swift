@@ -9,10 +9,10 @@
 import Foundation
 import UIKit
 
-// TODO: remove NSObject inheritance (needed to conform to NSObjectProtocol for UITableViewDatasource)
+// TODO: NSObject inheritance? (necessary to conform to NSObjectProtocol for UITableViewDatasource)
 // TODO: rename object to element
 
-public class VIArrayDataSource<T>: NSObject {
+public class VIArrayDataSource<T> {
     
     // MARK: Public Properties
     
@@ -60,7 +60,7 @@ public class VIArrayDataSource<T>: NSObject {
     // TODO: implement more initializers?
 
     // TODO: really expose initializer without array argument?
-    public override init() {
+    public init() {
 
     }
     
@@ -84,6 +84,7 @@ public class VIArrayDataSource<T>: NSObject {
     
     private func loadObjects() -> [T]
     {
+        logger.log("Loading elements...", forLevel: .Info)
         if let array = array {
             var objects = array
             if let includeObject = self.includeObject {
@@ -92,8 +93,11 @@ public class VIArrayDataSource<T>: NSObject {
             if let isOrderedBefore = self.isOrderedBefore {
                 objects.sort(isOrderedBefore)
             }
+            logger.log("\(objects.count) elements loaded.", forLevel: .Info)
+            logger.log("Loaded elements: \(objects)", forLevel: .Verbose)
             return objects
         } else {
+            logger.log("No array provided to load elements from.", forLevel: .Info)
             return []
         }
     }
@@ -108,9 +112,14 @@ public class VIArrayDataSource<T>: NSObject {
     
     private func loadSections() -> [VISection<T>]
     {
+        logger.log("Loading sections...", forLevel: .Info)
         if let sectionNameForObject = sectionNameForObject {
-            return VISection<T>.makeSections(objects, sectionNameForObject: sectionNameForObject)
+            let sections = VISection<T>.makeSections(objects, sectionNameForObject: sectionNameForObject)
+            logger.log("\(sections.count) sections for \(objects.count) elements loaded.", forLevel: .Info)
+            logger.log("Loaded sections: \(sections)", forLevel: .Verbose)
+            return sections
         } else {
+            logger.log("No sectioning necessary, placed all \(objects.count) elements in nil section.", forLevel: .Info)
             return [ VISection<T>(name: nil, objects: objects) ]
         }
     }
@@ -131,6 +140,7 @@ public class VIArrayDataSource<T>: NSObject {
     
     private func setNeedsReload()
     {
+        logger.log("Triggered reload", forLevel: .Info)
         _objects = nil
         _sections = nil
     }
@@ -159,36 +169,36 @@ public class VIArrayDataSource<T>: NSObject {
 // TODO: explicitly declare conformation to UITableViewDatasource Protocol
 extension VIArrayDataSource {
     
-    public func numberOfSectionsInTableView(tableView: UITableView!) -> Int
+    public func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
         return sections.count
     }
     
-    public func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int
+    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return sections[section].objects.count
     }
     
-    public func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell!
+    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         if let cellBlock = self.cellBlock {
             return cellBlock(tableView: tableView, indexPath: indexPath, object: objectAtIndexPath(indexPath))
         } else {
-            return nil
+            return UITableViewCell(style: .Default, reuseIdentifier: nil)
         }
     }
     
-    public func tableView(tableView: UITableView!, titleForHeaderInSection section: Int) -> String?
+    public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String
     {
-        return sections[section].name
+        return sections[section].name ?? ""
     }
     
-    public func sectionIndexTitlesForTableView(tableView: UITableView!) -> [String]
+    public func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]
     {
         return sectionIndexTitles
     }
     
-    public func tableView(tableView: UITableView!, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int
+    public func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int
     {
         return index
     }
@@ -209,28 +219,6 @@ public struct VISection<T> {
     
     static func makeSections(objects: [T], sectionNameForObject: T -> String? ) -> [VISection<T>]
     {
-        /*var sectionDict = [ String : [T] ]()
-        var emptySectionObjects = [T]()
-        for object in objects {
-            if let sectionName = sectionNameForObject(object) {
-                if var sectionObjects = sectionDict[sectionName] {
-                    sectionObjects.append(object)
-                } else {
-                    sectionDict[sectionName] = [ object ]
-                }
-            } else {
-                emptySectionObjects.append(object)
-            }
-        }
-
-        var sections = [VISection<T>]()
-        for ( sectionName, sectionObjects ) in sectionDict {
-            sections.append(VISection(name: sectionName, objects: sectionObjects))
-        }
-        if emptySectionObjects.count > 0 {
-            sections.append(VISection(name: nil, objects: emptySectionObjects))
-        }*/
-        
         var sections = [VISection<T>]()
         
         if objects.count == 0 {
@@ -269,10 +257,25 @@ public struct VISection<T> {
     }
 }
 
-extension VISection: Printable {
+extension VISection: Printable, DebugPrintable {
     
     public var description: String {
         let unnamedString = "Unnamed Section"
-        return "<\(name ?? unnamedString): \(objects.description)>"
+        return "\(name ?? unnamedString)"
     }
+
+    public var debugDescription: String {
+        return "<\(description): \(objects.debugDescription)>"
+    }
+}
+
+
+// MARK: - Logging
+
+extension VIArrayDataSource {
+
+    var logger: VILogger {
+        return VILogger.loggerForKeyPath("VIOSFramework.VIArrayDataSource")
+    }
+
 }

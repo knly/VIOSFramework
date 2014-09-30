@@ -65,7 +65,7 @@ public class VIAddressBook<C: VIAddressBookContact> {
     
     private func loadContacts() -> [C]
     {
-        println("loading contacts...")
+        logger.log("Loading contacts ...", forLevel: .Verbose)
         var records: NSArray = ABAddressBookCopyArrayOfAllPeople(addressBookRef).takeRetainedValue()
         var contacts = [C]()
         var mergedRecords = [ABRecordRef]()
@@ -87,12 +87,14 @@ public class VIAddressBook<C: VIAddressBookContact> {
             // TODO: use +=
             contacts.append(contact)
         }
-        println("done")
+        logger.log("\(contacts.count) contacts loaded", forLevel: .Verbose)
         return contacts
     }
     
 }
 
+
+// MARK: - Address Book Contact
 
 public class VIAddressBookContact: VIPerson {
     
@@ -121,23 +123,45 @@ public class VIAddressBookContact: VIPerson {
             recordId = ABRecordGetRecordID(record)
         }
         if firstName == nil {
-            firstName = ABRecordCopyValue(record, kABPersonFirstNameProperty).takeRetainedValue() as? String
+            firstName = ABRecordCopyValue(record, kABPersonFirstNameProperty)?.takeRetainedValue() as? NSString
         }
         if lastName == nil {
-            lastName = ABRecordCopyValue(record, kABPersonLastNameProperty).takeRetainedValue() as? String
+            lastName = ABRecordCopyValue(record, kABPersonLastNameProperty)?.takeRetainedValue() as? NSString
         }
         if birthday == nil {
-            let birthday = ABRecordCopyValue(record, kABPersonBirthdayProperty).takeRetainedValue() as? NSDate
+            let birthday = ABRecordCopyValue(record, kABPersonBirthdayProperty)?.takeRetainedValue() as? NSDate
             if birthday != nil && NSCalendar(calendarIdentifier: NSGregorianCalendar).component(.YearCalendarUnit, fromDate: birthday!) != 1604 {
                 self.birthday = birthday
             }
         }
         if picture == nil {
-            pictureThumbnail = UIImage(data: ABPersonCopyImageDataWithFormat(record, kABPersonImageFormatThumbnail).takeRetainedValue())
-            picture = UIImage(data: ABPersonCopyImageDataWithFormat(record, kABPersonImageFormatOriginalSize).takeRetainedValue())
+            if let pictureThumbnailData = ABPersonCopyImageDataWithFormat(record, kABPersonImageFormatThumbnail)?.takeRetainedValue() {
+                pictureThumbnail = UIImage(data: pictureThumbnailData)
+            }
+            if let pictureData = ABPersonCopyImageDataWithFormat(record, kABPersonImageFormatOriginalSize)?.takeRetainedValue() {
+                picture = UIImage(data: pictureData)
+            }
         }
-        // TODO: use +=
         mergedAddressBookRecordRefs.append(record)
+    }
+
+}
+
+
+// MARK: - Logging
+
+extension VIAddressBook {
+
+    var logger: VILogger {
+        return VILogger.loggerForKeyPath("VIOSFramework.VIAddressBook")
+    }
+
+}
+
+extension VIAddressBookContact {
+
+    var logger: VILogger {
+        return VILogger.loggerForKeyPath("VIOSFramework.VIAddressBook.VIAddressBookContact")
     }
 
 }

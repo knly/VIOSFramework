@@ -9,16 +9,6 @@
 import XCTest
 
 class VIPersonTests: XCTestCase {
-
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
     
     
     // MARK: Full Name
@@ -54,10 +44,10 @@ class VIPersonTests: XCTestCase {
         let person3 = VIPerson(firstName: nil, lastName: "Chen")
         let person4 = VIPerson(firstName: "David", lastName: "Drey")
         let nilPerson = VIPerson()
-        XCTAssertTrue(VIPerson.leadingLastNameIsOrderedBefore(person1, obj2: person2), "Incorrect ordering: \(person1) should be before \(person2)")
-        XCTAssertTrue(VIPerson.leadingLastNameIsOrderedBefore(person2, obj2: person3), "Incorrect ordering: \(person2) should be before \(person3)")
-        XCTAssertTrue(VIPerson.leadingLastNameIsOrderedBefore(person3, obj2: person4), "Incorrect ordering: \(person3) should be before \(person4)")
-        XCTAssertTrue(VIPerson.leadingLastNameIsOrderedBefore(person1, obj2: nilPerson), "Incorrect ordering: \(person1) should be before \(nilPerson)")
+        XCTAssertTrue(VIPerson.leadingLastNameIsOrderedBefore(person1, person2), "Incorrect ordering: \(person1) should be before \(person2)")
+        XCTAssertTrue(VIPerson.leadingLastNameIsOrderedBefore(person2, person3), "Incorrect ordering: \(person2) should be before \(person3)")
+        XCTAssertTrue(VIPerson.leadingLastNameIsOrderedBefore(person3, person4), "Incorrect ordering: \(person3) should be before \(person4)")
+        XCTAssertTrue(VIPerson.leadingLastNameIsOrderedBefore(person1, nilPerson), "Incorrect ordering: \(person1) should be before \(nilPerson)")
     }
 
 }
