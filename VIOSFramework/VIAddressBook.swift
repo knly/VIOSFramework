@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import AddressBook
+import VILogKit
 
 public let VIAddressBookDidChangeExternallyNotification = "VIAddressBookDidChangeExternallyNotification"
 public let VIChangedAddressBookContacts = "VIChangedAddressBookContacts"

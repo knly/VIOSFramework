@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import VILogKit
 
 // TODO: NSObject inheritance? (necessary to conform to NSObjectProtocol for UITableViewDatasource)
 // TODO: rename object to element
