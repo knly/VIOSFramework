@@ -58,7 +58,8 @@
             [[NSUbiquitousKeyValueStore defaultStore] setObject:obj forKey:key];
         }
     }];
-    [self.logger log:@"Pushed local User Defaults to Cloud." object:store forLevel:VILogLevelInfo];
+    [self.logger log:@"Pushed local User Defaults to Cloud." forLevel:VILogLevelInfo];
+    [self.logger log:@"Pushed data:" object:store forLevel:VILogLevelVerbose];
 }
 
 - (void)cloudStoreDidChange:(NSNotification *)notification {
@@ -74,6 +75,7 @@
         }
     }];
     [self.logger log:@"Updated local User Defaults from Cloud." object:store forLevel:VILogLevelInfo];
+    [self.logger log:@"Updated data:" object:store forLevel:VILogLevelVerbose];
 
     //[[NSUserDefaults standardUserDefaults] synchronize];
 
