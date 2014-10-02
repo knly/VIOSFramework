@@ -10,9 +10,15 @@
 
 @implementation VIUserDefaultsSyncManager
 
+
+#pragma mark - Object Lifecycle
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+
+#pragma mark - Enabling Sync
 
 - (void)setSyncEnabled:(BOOL)syncEnabled {
     if (_syncEnabled!=syncEnabled) {
@@ -25,19 +31,23 @@
 
             // Register for iCloud Key-Value Store changes
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cloudStoreDidChange:) name:NSUbiquitousKeyValueStoreDidChangeExternallyNotification object:[NSUbiquitousKeyValueStore defaultStore]];
-            [[NSUbiquitousKeyValueStore defaultStore] synchronize];
 
-            [self.logger log:@"Enabled User Defaults Cloud Sync" forLevel:VILogLevelInfo];
+            [self.logger log:@"Enabled User Defaults Cloud Sync." forLevel:VILogLevelInfo];
+
+            [[NSUbiquitousKeyValueStore defaultStore] synchronize];
 
         } else {
 
             [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-            [self.logger log:@"Disabled User Defaults Cloud Sync" forLevel:VILogLevelInfo];
+            [self.logger log:@"Disabled User Defaults Cloud Sync." forLevel:VILogLevelInfo];
 
         }
     }
 }
+
+
+#pragma mark - Sync Callbacks
 
 - (void)localStoreDidChange:(NSNotification *)notification {
 
@@ -48,8 +58,7 @@
             [[NSUbiquitousKeyValueStore defaultStore] setObject:obj forKey:key];
         }
     }];
-    [self.logger log:@"Pushed local User Defaults to Cloud" object:store forLevel:VILogLevelInfo];
-
+    [self.logger log:@"Pushed local User Defaults to Cloud." object:store forLevel:VILogLevelInfo];
 }
 
 - (void)cloudStoreDidChange:(NSNotification *)notification {
@@ -64,7 +73,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:obj forKey:key];
         }
     }];
-    [self.logger log:@"Updated local User Defaults from Cloud" object:store forLevel:VILogLevelInfo];
+    [self.logger log:@"Updated local User Defaults from Cloud." object:store forLevel:VILogLevelInfo];
 
     //[[NSUserDefaults standardUserDefaults] synchronize];
 
