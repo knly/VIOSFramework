@@ -91,7 +91,7 @@
 		[self.staticCardsView addSubview:staticCard];
 	}
 	while ([self.staticCardImageViews count]>self.displayCardNumber) {
-		UIImageView *cardImageView = [self.staticCardImageViews lastElement].object;
+		UIImageView *cardImageView = ((VIListElement *)[self.staticCardImageViews lastElement]).object;
 		[cardImageView removeFromSuperview];
 		[self.staticCardImageViews removeObject:cardImageView];
 	}
@@ -102,7 +102,7 @@
 		[self.scrollingCardsView addSubview:scrollingCard];
 	}
 	while ([self.scrollingCardImageViews count]>self.displayCardNumber) {
-		UIImageView *cardImageView = [self.scrollingCardImageViews lastElement].object;
+		UIImageView *cardImageView = ((VIListElement *)[self.scrollingCardImageViews lastElement]).object;
 		[cardImageView removeFromSuperview];
 		[self.scrollingCardImageViews removeObject:cardImageView];
 	}
@@ -159,7 +159,7 @@
 
 	for (int i=0; i<self.displayCardNumber; i++) {
         UIImage *cardImage = (!self.reverse&&self.pack.showCover) ? [self coverImage] :[self imageForCard:cu];
-		[(UIImageView *)self.scrollingCardImageViews.currentElement.object setImage:cardImage];
+		[(UIImageView *)((VIListElement *)self.scrollingCardImageViews.currentElement).object setImage:cardImage];
 		if (self.reverse) cu = (VIPlayingCard *)cu.prev;
         else if (!self.pack.showCover) cu = (VIPlayingCard *)cu.next;
 		if (self.reverse) [self.scrollingCardImageViews stepPrev];
@@ -168,7 +168,7 @@
 	if (self.reverse) [self.staticCardImageViews moveToLast];
     else [self.staticCardImageViews moveToFirst];
 	for (int i=0; i<self.displayCardNumber; i++) {
-		[(UIImageView *)self.staticCardImageViews.currentElement.object setImage:[self imageForCard:cu]];
+		[(UIImageView *)((VIListElement *)self.staticCardImageViews.currentElement).object setImage:[self imageForCard:cu]];
 		cu = (self.reverse) ? (VIPlayingCard *)cu.prev : (VIPlayingCard *)cu.next;
 		if (self.reverse) [self.staticCardImageViews stepPrev];
         else [self.staticCardImageViews stepNext];

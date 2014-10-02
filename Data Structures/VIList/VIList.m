@@ -156,7 +156,7 @@
 }
 
 - (BOOL)containsElement:(id <VIListElement>)element {
-    return [self elementForObject:element]!=nil;
+    return [self.elements containsObject:element];
 }
 
 - (NSUInteger)count {
