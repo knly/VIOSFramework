@@ -66,4 +66,12 @@
     [[NSUserDefaults standardUserDefaults] setInteger:significantEventsCount forKey:kVIUserDefaultsKeyRateReminderSignificantEventCount];
 }
 
+- (void)setDebugMode:(BOOL)debugMode
+{
+    _debugMode = debugMode;
+    if (self.debugMode) {
+        [self.logger log:@"Enabled debug mode - remember to turn this of for production." forLevel:VILogLevelWarning];
+    }
+}
+
 @end
