@@ -129,11 +129,7 @@ NSString * const kSKRequestProductIdentifiersProperty = @"kSKRequestProductIdent
     [self.logger log:@"Initiating product purchase..." object:product.productIdentifier forLevel:VILogLevelDebug];
     
     if (![SKPaymentQueue canMakePayments]) {
-        
         [self.logger log:@"Purchases disabled, aborting product purchase." object:product.productIdentifier forLevel:VILogLevelWarning];
-        
-        UIAlertView *newAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"purchases_disabled_alert_title", @"") message:NSLocalizedString(@"purchases_disabled_alert_msg", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"ok_button_title", @"") otherButtonTitles:nil];
-        [newAlertView show];
         return;
     }
     SKPayment *payment = [SKPayment paymentWithProduct:product.product];
@@ -171,6 +167,7 @@ NSString * const kSKRequestProductIdentifiersProperty = @"kSKRequestProductIdent
                 
             case SKPaymentTransactionStateFailed:
                 [self.logger log:@"Updated transaction state: failed" object:product.productIdentifier forLevel:VILogLevelDebug];
+                [self.logger log:@"Transaction failed with error:" object:transaction.error forLevel:VILogLevelDebug];
                 product.state = VIInAppPurchaseProductStateVerified;
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                 break;

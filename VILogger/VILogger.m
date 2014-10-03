@@ -16,11 +16,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         defaultLogger = [[self alloc] init];
-        #ifdef DEBUG
-            defaultLogger.logLevel = VILogLevelUnspecified;
-        #elif
-            defaultLogger.logLevel = VILogLevelError;
-        #endif
+        defaultLogger.logLevel = VILogLevelUnspecified;
     });
     return defaultLogger;
 

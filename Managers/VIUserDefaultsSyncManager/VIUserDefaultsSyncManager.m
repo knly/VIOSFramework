@@ -22,6 +22,12 @@
 
 - (void)setSyncEnabled:(BOOL)syncEnabled {
     if (_syncEnabled!=syncEnabled) {
+        
+        if (syncEnabled && (NSClassFromString(@"NSUbiquitousKeyValueStore")==nil || [NSUbiquitousKeyValueStore defaultStore]==nil)) {
+            [self.logger log:@"Can't enable user defaults sync because there is no cloud key value store." forLevel:VILogLevelWarning];
+            return;
+        }
+        
         _syncEnabled = syncEnabled;
 
         if (_syncEnabled) {
