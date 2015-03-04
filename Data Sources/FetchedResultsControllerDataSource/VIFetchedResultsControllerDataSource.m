@@ -141,9 +141,10 @@
             [self.logger log:@"Inserted row at index path" object:newIndexPath forLevel:VILogLevelVerbose];
             break;
         case NSFetchedResultsChangeMove:
-            [self.tableView moveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
-            break;
+            [self.tableView deleteRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView insertRowsAtIndexPaths:@[ newIndexPath ] withRowAnimation:UITableViewRowAnimationAutomatic];
             [self.logger log:@"Moved row at index path" object:indexPath forLevel:VILogLevelVerbose];
+            break;
         case NSFetchedResultsChangeDelete:
             [self.tableView deleteRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationAutomatic];
             [self.logger log:@"Deleted row at index path" object:indexPath forLevel:VILogLevelVerbose];
