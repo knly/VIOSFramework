@@ -278,15 +278,10 @@ extension VISection: Printable, DebugPrintable {
 
 // MARK: - Logging
 
-// TODO: move to umbrella header or sth
-public var logger: Logger {
-    return Logger.loggerForKeyPath("VIDataSourceKit")
-}
-
 extension ArrayDataSource {
 
     public var logger: Logger {
-        return Logger.loggerForKeyPath("VIDataSourceKit.ArrayDataSource")
+        return Logger.loggerForKeyPath("ArrayDataSource")
     }
 
 }
@@ -294,7 +289,7 @@ extension ArrayDataSource {
 extension VISection {
     
     public var logger: Logger {
-        return Logger.loggerForKeyPath("VIDataSourceKit.ArrayDataSource.VISection")
+        return Logger.loggerForKeyPath("ArrayDataSource.VISection")
     }
     
 }
