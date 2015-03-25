@@ -10,7 +10,7 @@ import UIKit
 
 extension UITableView {
     
-    func adjustFrameForParallaxedHeaderView(parallaxedView: UIView) {
+    public func adjustFrameForParallaxedHeaderView(parallaxedView: UIView) {
         if let tableHeaderView = self.tableHeaderView {
             let offset = self.contentOffset.y + self.contentInset.top
             var parallaxedFrame = tableHeaderView.bounds
