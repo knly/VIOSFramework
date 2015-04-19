@@ -8,11 +8,12 @@
 
 import UIKit
 
+
 @IBDesignable
-public class VICircularProgressView: UIView {
+public class CircularProgressView: UIView {
 
     
-    // MARK: - Public Attributes
+    // MARK: Public Attributes
     
     /// The progress to visualize. Takes values between 0 and 1.
     @IBInspectable public var progress: CGFloat = 0.5 {
@@ -53,6 +54,9 @@ public class VICircularProgressView: UIView {
         }
     }
     
+    @IBInspectable public var textColor: UIColor = UIColor.blackColor()
+    
+    
     /// Show or hide the text
     @IBInspectable public var showText: Bool = true
     
@@ -85,13 +89,20 @@ public class VICircularProgressView: UIView {
     }
     
     
-    // MARK: - Drawing
+    // MARK: - Layout
+    
+    override public func intrinsicContentSize() -> CGSize {
+        return CGSize(width: 44, height: 44)
+    }
     
     override public func layoutSubviews() {
         super.layoutSubviews()
         // make sure to redraw when the layout changes
         self.setNeedsDisplay()
     }
+
+    
+    // MARK: - Drawing
     
     override public func drawRect(rect: CGRect)
     {
