@@ -36,7 +36,7 @@
 + (UIView *)viewInNibNamed:(NSString *)aNibName withTag:(int)aTag {
     NSArray *nibObjects = [[NSBundle mainBundle] loadNibNamed:aNibName owner:nil options:nil];
     for (id anObject in nibObjects) {
-        if ([anObject isKindOfClass:[self class]]&&[anObject tag]==aTag) {
+        if ([anObject isKindOfClass:[self class]]&&[(UIView *)anObject tag]==aTag) {
             return anObject;
         }
     }
