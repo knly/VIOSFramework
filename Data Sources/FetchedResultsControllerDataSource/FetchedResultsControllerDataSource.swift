@@ -7,7 +7,7 @@
 //
 
 import CoreData
-import VILogKit
+import Evergreen
 
 // TODO: make generic when the segmentation fault is fixed:
 // public class FetchedResultsControllerDataSource<T>: NSObject {

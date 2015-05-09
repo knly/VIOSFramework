@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import VILogKit
+import Evergreen
 
 
 // TODO: NSObject inheritance? (necessary to conform to NSObjectProtocol for UITableViewDatasource)
