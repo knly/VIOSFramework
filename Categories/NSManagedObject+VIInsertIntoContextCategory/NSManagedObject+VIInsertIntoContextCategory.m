@@ -12,7 +12,7 @@
 
 + (NSString *)entityName
 {
-    return NSStringFromClass([self class]);
+    return [NSStringFromClass([self class]) componentsSeparatedByString:@"."].lastObject;
 }
 
 - (NSString *)entityName
